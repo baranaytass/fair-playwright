@@ -215,7 +215,7 @@ npm run test:integration
 
 ## License
 
-MIT © [Baran Aytas](https://github.com/baranaytas)
+MIT © [Baran Aytas](https://github.com/baranaytass)
 
 ## Contributing
 
@@ -223,6 +223,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Links
 
-- [GitHub Repository](https://github.com/baranaytas/fair-playwright)
-- [Issue Tracker](https://github.com/baranaytas/fair-playwright/issues)
+- [GitHub Repository](https://github.com/baranaytass/fair-playwright)
+- [Issue Tracker](https://github.com/baranaytass/fair-playwright/issues)
 - [npm Package](https://www.npmjs.com/package/fair-playwright)

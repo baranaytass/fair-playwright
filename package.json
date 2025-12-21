@@ -46,12 +46,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/baranaytas/fair-playwright.git"
+    "url": "https://github.com/baranaytass/fair-playwright.git"
   },
   "bugs": {
-    "url": "https://github.com/baranaytas/fair-playwright/issues"
+    "url": "https://github.com/baranaytass/fair-playwright/issues"
   },
-  "homepage": "https://github.com/baranaytas/fair-playwright#readme",
+  "homepage": "https://github.com/baranaytass/fair-playwright#readme",
   "author": "Baran Aytas",
   "license": "MIT",
   "peerDependencies": {
