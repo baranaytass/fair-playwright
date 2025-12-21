@@ -48,7 +48,7 @@ export class StepTracker {
 
     const stepMetadata: StepMetadata = {
       id: stepId,
-      title: step.title,
+      title: this.cleanStepTitle(step.title),
       level: this.classifyStep(step, parentStepId),
       status: 'running',
       startTime: Date.now(),
@@ -181,12 +181,18 @@ export class StepTracker {
    * Classify step as MAJOR or MINOR
    */
   private classifyStep(step: TestStep, parentStepId?: string): StepLevel {
-    // If it has a parent, it's MINOR by default
+    // Priority 1: Check for explicit [MAJOR] or [MINOR] prefix from e2e helper
+    const prefixMatch = step.title.match(/^\[(MAJOR|MINOR)\]\s*/);
+    if (prefixMatch) {
+      return prefixMatch[1].toLowerCase() as StepLevel;
+    }
+
+    // Priority 2: If it has a parent, it's MINOR by default
     if (parentStepId) {
       return 'minor';
     }
 
-    // Check if step title contains keywords that indicate MAJOR
+    // Priority 3: Check if step title contains keywords that indicate MAJOR
     const majorKeywords = ['login', 'checkout', 'payment', 'register', 'setup', 'flow'];
     const titleLower = step.title.toLowerCase();
 
@@ -196,6 +202,13 @@ export class StepTracker {
 
     // Default to MINOR for top-level steps
     return 'minor';
+  }
+
+  /**
+   * Clean step title by removing [MAJOR]/[MINOR] prefix
+   */
+  private cleanStepTitle(title: string): string {
+    return title.replace(/^\[(MAJOR|MINOR)\]\s*/, '');
   }
 
   /**
