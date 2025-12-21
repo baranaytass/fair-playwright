@@ -24,7 +24,7 @@
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:integration": "cd test-project && npm test",
+    "test:integration": "npm run build && cd test-project && npm test",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",

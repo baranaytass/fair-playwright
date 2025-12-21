@@ -1,92 +1,92 @@
 import { test, expect } from '@playwright/test';
 
-// This is a placeholder test file
-// Once the fair-playwright package is built, we can import and use the e2e helper
-
-test.describe('Authentication Flow', () => {
-  test('should login successfully', async ({ page }) => {
-    // TODO: Replace with e2e.major() once implemented
-    await test.step('Navigate to login page', async () => {
-      await page.goto('/login');
-      expect(page.url()).toContain('/login');
+test.describe('Reporter Testing - Native Steps', () => {
+  test('should execute test with multiple steps', async ({ page }) => {
+    await test.step('Navigate to Example.com', async () => {
+      await page.goto('https://example.com');
+      expect(page.url()).toContain('example.com');
     });
 
-    await test.step('Fill login credentials', async () => {
-      await page.getByLabel('Email').fill('test@example.com');
-      await page.getByLabel('Password').fill('password123');
+    await test.step('Verify title', async () => {
+      await expect(page).toHaveTitle(/Example Domain/);
     });
 
-    await test.step('Submit login form', async () => {
-      await page.getByRole('button', { name: 'Login' }).click();
-      await expect(page).toHaveURL('/dashboard');
+    await test.step('Check heading exists', async () => {
+      const heading = page.locator('h1');
+      await expect(heading).toBeVisible();
     });
   });
 
-  test('should show error for invalid credentials', async ({ page }) => {
-    await test.step('Navigate to login page', async () => {
-      await page.goto('/login');
-    });
+  test('should handle nested steps', async ({ page }) => {
+    await test.step('User login flow', async () => {
+      await test.step('Navigate to site', async () => {
+        await page.goto('https://example.com');
+      });
 
-    await test.step('Fill invalid credentials', async () => {
-      await page.getByLabel('Email').fill('invalid@example.com');
-      await page.getByLabel('Password').fill('wrongpassword');
-    });
-
-    await test.step('Submit and verify error', async () => {
-      await page.getByRole('button', { name: 'Login' }).click();
-      await expect(page.getByText('Invalid credentials')).toBeVisible();
+      await test.step('Verify page title', async () => {
+        await expect(page).toHaveTitle(/Example Domain/);
+      });
     });
   });
 });
 
-test.describe('Shopping Cart', () => {
-  test('should add item to cart', async ({ page }) => {
-    await test.step('Navigate to products', async () => {
-      await page.goto('/products');
+test.describe('MAJOR/MINOR Classification', () => {
+  test('should classify steps with keywords', async ({ page }) => {
+    // 'login' keyword should auto-classify as MAJOR
+    await test.step('User login flow', async () => {
+      await page.goto('https://example.com');
     });
 
-    await test.step('Add product to cart', async () => {
-      await page.getByRole('button', { name: 'Add to Cart' }).first().click();
-      await expect(page.getByText('Item added to cart')).toBeVisible();
+    // 'checkout' keyword should auto-classify as MAJOR
+    await test.step('Checkout process', async () => {
+      await page.goto('https://example.com');
     });
 
-    await test.step('Verify cart count', async () => {
-      const cartBadge = page.locator('[data-testid="cart-count"]');
-      await expect(cartBadge).toHaveText('1');
-    });
-  });
-
-  test('should remove item from cart', async ({ page }) => {
-    // Setup: Add item first
-    await test.step('Setup: Add item to cart', async () => {
-      await page.goto('/products');
-      await page.getByRole('button', { name: 'Add to Cart' }).first().click();
-    });
-
-    await test.step('Navigate to cart', async () => {
-      await page.goto('/cart');
-    });
-
-    await test.step('Remove item from cart', async () => {
-      await page.getByRole('button', { name: 'Remove' }).click();
-      await expect(page.getByText('Cart is empty')).toBeVisible();
+    // No keyword, should be MINOR
+    await test.step('Click button', async () => {
+      await page.goto('https://example.com');
     });
   });
 });
 
-test.describe('Performance Tests', () => {
-  test('should load products page quickly', async ({ page }) => {
-    const startTime = Date.now();
-
-    await test.step('Load products page', async () => {
-      await page.goto('/products');
-      await page.waitForLoadState('networkidle');
+test.describe('Error Handling', () => {
+  test('should handle failed steps gracefully', async ({ page }) => {
+    await test.step('Step that will pass', async () => {
+      await page.goto('https://example.com');
     });
 
-    const loadTime = Date.now() - startTime;
+    await test.step('Step that will fail', async () => {
+      // This will fail intentionally
+      await expect(page).toHaveTitle(/This Title Does Not Exist/);
+    });
+  });
+});
 
-    await test.step('Verify load time', async () => {
-      expect(loadTime).toBeLessThan(3000); // Should load within 3 seconds
+test.describe('Multiple Tests', () => {
+  test('first test should pass', async ({ page }) => {
+    await test.step('Navigate', async () => {
+      await page.goto('https://example.com');
+    });
+
+    await test.step('Verify', async () => {
+      await expect(page).toHaveTitle(/Example Domain/);
+    });
+  });
+
+  test('second test should also pass', async ({ page }) => {
+    await test.step('Navigate again', async () => {
+      await page.goto('https://example.com');
+    });
+
+    await test.step('Check heading', async () => {
+      const heading = page.locator('h1');
+      await expect(heading).toBeVisible();
+    });
+  });
+
+  test('third test has payment keyword (MAJOR)', async ({ page }) => {
+    await test.step('Payment processing', async () => {
+      await page.goto('https://example.com');
     });
   });
 });
