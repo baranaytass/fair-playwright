@@ -1,0 +1,80 @@
+{
+  "name": "fair-playwright",
+  "version": "0.1.0",
+  "description": "AI-optimized Playwright test reporter with progressive terminal output and hierarchical step management",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build:watch": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:integration": "cd test-project && npm test",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "changeset": "changeset",
+    "release": "changeset publish",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "reporter",
+    "ai",
+    "test-automation",
+    "e2e",
+    "terminal",
+    "progressive",
+    "ai-optimized"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baranaytas/fair-playwright.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baranaytas/fair-playwright/issues"
+  },
+  "homepage": "https://github.com/baranaytas/fair-playwright#readme",
+  "author": "Baran Aytas",
+  "license": "MIT",
+  "peerDependencies": {
+    "@playwright/test": ">=1.40.0"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1",
+    "log-update": "^6.1.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
