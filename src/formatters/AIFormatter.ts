@@ -80,6 +80,18 @@ export class AIFormatter {
           md += `\n`;
         }
 
+        // Browser console errors
+        if (test.consoleErrors && test.consoleErrors.length > 0) {
+          md += `**Browser Console Errors** (${test.consoleErrors.length}):\n\n`;
+          test.consoleErrors.forEach((consoleError, index) => {
+            md += `${index + 1}. **[${consoleError.type}]** ${consoleError.message}\n`;
+            if (consoleError.location) {
+              md += `   - Location: \`${consoleError.location}\`\n`;
+            }
+          });
+          md += `\n`;
+        }
+
         // Attachments
         if (test.attachments.length > 0) {
           md += `**Artifacts**:\n\n`;

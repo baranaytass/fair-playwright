@@ -28,6 +28,7 @@ export class StepTracker {
       startTime: Date.now(),
       steps: [],
       attachments: [],
+      consoleErrors: [],
     };
 
     this.tests.set(testId, test);
@@ -66,12 +67,11 @@ export class StepTracker {
       }
     }
 
-    // Add to test's steps if it's a top-level step
-    if (!parentStepId) {
-      const test = this.tests.get(testId);
-      if (test) {
-        test.steps.push(stepMetadata);
-      }
+    // Add ALL steps to test's steps array (both top-level and nested)
+    // We'll use parentId to understand the hierarchy when displaying
+    const test = this.tests.get(testId);
+    if (test) {
+      test.steps.push(stepMetadata);
     }
 
     return stepId;
@@ -132,6 +132,46 @@ export class StepTracker {
       path: att.path,
       contentType: att.contentType,
     }));
+
+    // Extract console errors from stdout/stderr if available
+    this.extractConsoleErrors(test, result);
+  }
+
+  /**
+   * Extract console errors from test result output
+   */
+  private extractConsoleErrors(test: TestMetadata, result: TestResult): void {
+    if (!test.consoleErrors) {
+      test.consoleErrors = [];
+    }
+
+    // Check if stdout/stderr are available
+    if (!result.stdout || !result.stderr) {
+      return;
+    }
+
+    // Parse stdout for console errors
+    const output = result.stdout.join('\n') + '\n' + result.stderr.join('\n');
+
+    // Look for browser console error patterns
+    const errorPatterns = [
+      /console\.error:\s*(.+)/gi,
+      /\[error\]\s*(.+)/gi,
+      /ERROR:\s*(.+)/gi,
+    ];
+
+    errorPatterns.forEach((pattern) => {
+      const matches = output.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1]) {
+          test.consoleErrors!.push({
+            type: 'error',
+            message: match[1].trim(),
+            timestamp: Date.now(),
+          });
+        }
+      }
+    });
   }
 
   /**

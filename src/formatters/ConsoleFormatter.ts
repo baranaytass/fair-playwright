@@ -260,28 +260,92 @@ export class ConsoleFormatter {
   }
 
   /**
-   * Print failed test details
+   * Print failed test details with progressive MAJOR step display
    */
   private printFailedTest(test: TestMetadata): void {
     console.log(pc.red(`✗ ${test.title}`));
+    console.log('');
 
-    // Show error details
+    // Group steps by MAJOR hierarchy
+    const majorSteps = test.steps.filter((s) => s.level === 'major' && !s.parentId);
+
+    if (majorSteps.length > 0) {
+      // Find the first failed MAJOR step
+      const failedMajorIndex = majorSteps.findIndex((s) => s.status === 'failed');
+
+      majorSteps.forEach((majorStep, index) => {
+        const stepNumber = index + 1;
+
+        if (majorStep.status === 'passed') {
+          // Completed MAJOR steps: show single line
+          const duration = majorStep.duration ? pc.dim(` (${majorStep.duration}ms)`) : '';
+          const successMsg = majorStep.successMessage
+            ? pc.dim(` - ${majorStep.successMessage}`)
+            : '';
+          console.log(pc.green(`  ${stepNumber}. ✓ [MAJOR] ${majorStep.title}${successMsg}${duration}`));
+        } else if (majorStep.status === 'failed') {
+          // Failed MAJOR step: show detailed breakdown
+          console.log(pc.red(`  ${stepNumber}. ✗ [MAJOR] ${majorStep.title}`));
+
+          // Show all MINOR steps of this MAJOR step
+          const minorSteps = test.steps.filter((s) => s.parentId === majorStep.id);
+
+          if (minorSteps.length > 0) {
+            minorSteps.forEach((minorStep, minorIndex) => {
+              const minorNumber = minorIndex + 1;
+              const duration = minorStep.duration ? pc.dim(` (${minorStep.duration}ms)`) : '';
+
+              if (minorStep.status === 'passed') {
+                console.log(pc.green(`      ${minorNumber}. ✓ [minor] ${minorStep.title}${duration}`));
+              } else if (minorStep.status === 'failed') {
+                console.log(pc.red(`      ${minorNumber}. ✗ [minor] ${minorStep.title}${duration}`));
+                if (minorStep.error) {
+                  console.log(pc.dim(`         ${minorStep.error.message}`));
+                }
+              } else {
+                console.log(pc.dim(`      ${minorNumber}. ⊘ [minor] ${minorStep.title}`));
+              }
+            });
+          }
+
+          // Show MAJOR step error if exists
+          if (majorStep.error) {
+            console.log('');
+            console.log(pc.red(`  Error: ${majorStep.error.message}`));
+          }
+        } else if (majorStep.status === 'skipped') {
+          console.log(pc.yellow(`  ${stepNumber}. ⊘ [MAJOR] ${majorStep.title} (skipped)`));
+        }
+      });
+    }
+
+    // Show test-level error details
     if (test.error) {
-      console.log(pc.red(`  Error: ${test.error.message}`));
+      console.log('');
+      console.log(pc.red(`  Error Message: ${test.error.message}`));
+
+      if (test.error.stack) {
+        console.log('');
+        console.log(pc.dim('  Stack Trace:'));
+        const stackLines = test.error.stack.split('\n').slice(0, 5);
+        stackLines.forEach((line) => {
+          console.log(pc.dim(`    ${line}`));
+        });
+      }
+
       if (test.error.location) {
-        console.log(pc.dim(`  at ${test.error.location}`));
+        console.log(pc.dim(`  Location: ${test.error.location}`));
       }
     }
 
-    // Show failed steps
-    const failedSteps = test.steps.filter((s) => s.status === 'failed');
-    if (failedSteps.length > 0) {
-      console.log(pc.dim('  Failed steps:'));
-      failedSteps.forEach((step) => {
-        const levelBadge = step.level === 'major' ? pc.blue('[MAJOR]') : pc.dim('[minor]');
-        console.log(pc.red(`    ✗ ${levelBadge} ${step.title}`));
-        if (step.error) {
-          console.log(pc.dim(`      ${step.error.message}`));
+    // Show browser console errors if any
+    if (test.consoleErrors && test.consoleErrors.length > 0) {
+      console.log('');
+      console.log(pc.yellow(`  Browser Console Errors (${test.consoleErrors.length}):`));
+      test.consoleErrors.forEach((consoleError, index) => {
+        console.log(pc.yellow(`    ${index + 1}. [${consoleError.type}] ${consoleError.message}`));
+        if (consoleError.location) {
+          console.log(pc.dim(`       at ${consoleError.location}`));
         }
       });
     }

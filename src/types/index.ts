@@ -273,6 +273,16 @@ export interface TestMetadata {
     path?: string;
     contentType: string;
   }>;
+
+  /**
+   * Browser console errors captured during test execution
+   */
+  consoleErrors?: Array<{
+    type: string;
+    message: string;
+    location?: string;
+    timestamp: number;
+  }>;
 }
 
 /**
