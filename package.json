@@ -34,7 +34,10 @@
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "release": "changeset publish",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "keywords": [
     "playwright",
@@ -58,7 +61,7 @@
   "bugs": {
     "url": "https://github.com/baranaytass/fair-playwright/issues"
   },
-  "homepage": "https://github.com/baranaytass/fair-playwright#readme",
+  "homepage": "https://baranaytass.github.io/fair-playwright/",
   "author": "Baran Aytas",
   "license": "MIT",
   "peerDependencies": {
@@ -80,6 +83,7 @@
     "prettier": "^3.4.2",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
+    "vitepress": "^1.6.4",
     "vitest": "^2.1.8"
   },
   "engines": {

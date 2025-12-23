@@ -52,4 +52,10 @@ Thumbs.db
 # Changesets
 .changeset/*.md
 !.changeset/README.md
-docs/
+
+# Development artifacts
+test-project/
+
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/
