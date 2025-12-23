@@ -10,6 +10,10 @@ export { FairReporter as default } from './reporter/FairReporter.js';
 // Export E2E helper
 export { e2e } from './e2e.js';
 
+// Export MCP server (optional)
+export { MCPServer, createMCPServer } from './mcp/server.js';
+export type { MCPServerConfig } from './mcp/server.js';
+
 // Export types
 export type {
   // Reporter types

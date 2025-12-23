@@ -130,18 +130,52 @@ This two-level hierarchy helps both humans and AI understand test structure at a
 
 ## MCP Server Integration
 
-Use with Claude Desktop or other MCP clients:
+Fair-playwright includes a full **Model Context Protocol (MCP)** server for AI assistant integration.
+
+### Features
+
+The MCP server exposes:
+- **3 Resources**: Test results, summary, and failure details
+- **5 Tools**: Query tests, filter by status, get step details, and more
+- **Streaming Support**: Real-time test result updates
+
+### Setup with Claude Desktop
+
+Add to `claude_desktop_config.json`:
 
 ```json
-// claude_desktop_config.json
 {
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"]
+      "args": ["fair-playwright-mcp"],
+      "env": {
+        "FAIR_PLAYWRIGHT_RESULTS": "./test-results/results.json"
+      }
     }
   }
 }
+```
+
+### Available Resources
+
+- `fair-playwright://test-results` - Complete test execution data (JSON)
+- `fair-playwright://test-summary` - AI-optimized summary (Markdown)
+- `fair-playwright://failures` - Detailed failure information (Markdown)
+
+### Available Tools
+
+- `get_test_results` - Get all test results with full details
+- `get_failure_summary` - Get AI-optimized failure summary
+- `query_test` - Search for specific test by title
+- `get_tests_by_status` - Filter tests by passed/failed/skipped
+- `get_step_details` - Get MAJOR/MINOR step details for a test
+
+### CLI Options
+
+```bash
+npx fair-playwright-mcp --help
+npx fair-playwright-mcp --results-path ./custom-results.json --verbose
 ```
 
 ## Output Examples
