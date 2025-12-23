@@ -18,7 +18,7 @@ export class StepTracker {
   /**
    * Start tracking a test
    */
-  startTest(testCase: TestCase, result: TestResult): string {
+  startTest(testCase: TestCase, _result: TestResult): string {
     const testId = this.getTestId(testCase);
     const test: TestMetadata = {
       id: testId,
@@ -40,7 +40,7 @@ export class StepTracker {
    */
   startStep(
     testCase: TestCase,
-    result: TestResult,
+    _result: TestResult,
     step: TestStep,
     parentStepId?: string
   ): string {
@@ -81,8 +81,8 @@ export class StepTracker {
    * End tracking a step
    */
   endStep(
-    testCase: TestCase,
-    result: TestResult,
+    _testCase: TestCase,
+    _result: TestResult,
     step: TestStep,
     stepId: string
   ): void {

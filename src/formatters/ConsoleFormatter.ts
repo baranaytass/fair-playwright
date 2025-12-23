@@ -13,7 +13,6 @@ export class ConsoleFormatter {
   private passedTests: number = 0;
   private failedTests: number = 0;
   private skippedTests: number = 0;
-  private currentTest?: TestMetadata;
   private runningSteps: Map<string, StepMetadata> = new Map();
   private isCI: boolean;
   private useProgressiveMode: boolean;
@@ -97,7 +96,6 @@ export class ConsoleFormatter {
 
   onTestEnd(test: TestMetadata): void {
     this.completedTests++;
-    this.currentTest = undefined;
 
     if (test.status === 'passed') {
       this.passedTests++;
@@ -270,9 +268,6 @@ export class ConsoleFormatter {
     const majorSteps = test.steps.filter((s) => s.level === 'major' && !s.parentId);
 
     if (majorSteps.length > 0) {
-      // Find the first failed MAJOR step
-      const failedMajorIndex = majorSteps.findIndex((s) => s.status === 'failed');
-
       majorSteps.forEach((majorStep, index) => {
         const stepNumber = index + 1;
 

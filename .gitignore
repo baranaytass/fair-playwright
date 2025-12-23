@@ -52,3 +52,4 @@ Thumbs.db
 # Changesets
 .changeset/*.md
 !.changeset/README.md
+docs/

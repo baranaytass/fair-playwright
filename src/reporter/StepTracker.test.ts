@@ -205,13 +205,15 @@ function createMockTestResult(status: string = 'passed', error?: Error): TestRes
     duration: 1000,
     errors: [],
     attachments: [],
+    stdout: [],
+    stderr: [],
     error: error
       ? {
           message: error.message,
           stack: error.stack,
         }
       : undefined,
-  } as TestResult;
+  } as unknown as TestResult;
 }
 
 function createMockStep(title: string): TestStep {

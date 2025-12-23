@@ -7,15 +7,13 @@ import type { FairReporterConfig, TestMetadata } from '../types/index.js';
  * JSON formatter for machine-readable output
  */
 export class JSONFormatter {
-  private config: Required<FairReporterConfig>;
   private outputPath: string;
 
-  constructor(config: Required<FairReporterConfig>, outputPath: string) {
-    this.config = config;
+  constructor(_config: Required<FairReporterConfig>, outputPath: string) {
     this.outputPath = outputPath;
   }
 
-  async write(allTests: TestMetadata[], result: FullResult): Promise<void> {
+  async write(allTests: TestMetadata[], _result: FullResult): Promise<void> {
     const passed = allTests.filter((t) => t.status === 'passed').length;
     const failed = allTests.filter((t) => t.status === 'failed').length;
     const skipped = allTests.filter((t) => t.status === 'skipped').length;

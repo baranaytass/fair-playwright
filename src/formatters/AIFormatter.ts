@@ -15,8 +15,8 @@ export class AIFormatter {
     this.outputPath = outputPath;
   }
 
-  async write(allTests: TestMetadata[], result: FullResult): Promise<void> {
-    const markdown = this.generateMarkdown(allTests, result);
+  async write(allTests: TestMetadata[], _result: FullResult): Promise<void> {
+    const markdown = this.generateMarkdown(allTests, _result);
 
     try {
       // Ensure directory exists
@@ -29,7 +29,7 @@ export class AIFormatter {
     }
   }
 
-  private generateMarkdown(allTests: TestMetadata[], result: FullResult): string {
+  private generateMarkdown(allTests: TestMetadata[], _result: FullResult): string {
     const passed = allTests.filter((t) => t.status === 'passed').length;
     const failed = allTests.filter((t) => t.status === 'failed').length;
     const skipped = allTests.filter((t) => t.status === 'skipped').length;
