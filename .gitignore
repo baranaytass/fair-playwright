@@ -59,3 +59,7 @@ test-project/
 # VitePress
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+
+# Documentation analysis
+docs-analysis/
+tests/docs-analysis.spec.ts

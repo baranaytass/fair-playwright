@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: fair-playwright
-  text: AI-Optimized Test Reporter
-  tagline: Progressive terminal output with hierarchical step management for Playwright
+  name: ""
+  text: ""
+  tagline: AI-optimized Playwright test reporter with progressive terminal output and hierarchical step management
   image:
     src: /logo.png
     alt: fair-playwright
@@ -20,30 +20,36 @@ hero:
       link: /api/
 
 features:
-  - icon: 🤖
-    title: AI-First Design
-    details: Structured output optimized for LLM context and AI code assistants. Includes full MCP server for Claude Desktop and other AI tools.
-
   - icon: 📊
     title: MAJOR/MINOR Hierarchy
-    details: Two-level step organization helps both humans and AI understand test structure at a glance. Clear separation of test flows.
+    details: Two-level step organization. MAJOR steps for workflows, MINOR steps for actions. Clear, structured test output.
 
   - icon: ⚡
     title: Progressive Output
-    details: Live terminal updates with smart compression. See what's running now, hide completed steps, focus on failures.
+    details: Live terminal updates with smart compression. Completed steps collapse, current step expands, failures stay visible.
+
+  - icon: 🤖
+    title: AI-First Design
+    details: Structured output optimized for AI assistants. Built-in MCP server for Claude Desktop integration.
 
   - icon: 🎯
     title: Zero Config
-    details: Works out of the box with sensible defaults. Optional configuration for advanced use cases.
-
-  - icon: 🔌
-    title: MCP Integration
-    details: Built-in Model Context Protocol server. Expose test results to AI assistants via 3 resources and 5 tools.
-
-  - icon: 🪶
-    title: Lightweight
-    details: Only 3 runtime dependencies. Bundle size under 30KB compressed. Minimal performance overhead.
+    details: Works out of the box. Add to playwright.config.ts and start writing better tests immediately.
 ---
+
+## What is fair-playwright?
+
+A Playwright test reporter that makes test output **readable for humans** and **parseable for AI**. Organize tests into hierarchical steps, see progressive terminal updates, and integrate with AI coding assistants.
+
+## See It in Action
+
+<img src="/terminal-output.png" alt="fair-playwright terminal output" style="border-radius: 8px; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+
+Progressive output shows:
+- ✅ Completed MAJOR steps (collapsed)
+- ⏳ Current step with live updates
+- ❌ Failed steps with full context
+- 📊 Hierarchical structure at a glance
 
 ## Quick Start
 
@@ -73,20 +79,29 @@ export default defineConfig({
 ```
 
 ```typescript
-// tests/example.spec.ts
+// Write tests with hierarchical steps
 import { test } from '@playwright/test';
 import { e2e } from 'fair-playwright';
 
-test('user login', async ({ page }) => {
-  await e2e.major('User login flow', {
-    success: 'User logged in successfully',
-    failure: 'Login failed',
+test('user checkout', async ({ page }) => {
+  await e2e.major('Complete purchase', {
+    success: 'Order placed successfully',
+    failure: 'Checkout failed',
     steps: [
       {
-        title: 'Open login page',
-        success: 'Page opened',
+        title: 'Add to cart',
+        success: 'Item added',
         action: async () => {
-          await page.goto('/login');
+          await page.click('[data-test="add-to-cart"]');
+        }
+      },
+      {
+        title: 'Checkout',
+        success: 'Order confirmed',
+        action: async () => {
+          await page.click('[data-test="checkout"]');
+          await page.fill('[name="card"]', '4111111111111111');
+          await page.click('[data-test="submit"]');
         }
       }
     ]
@@ -96,27 +111,19 @@ test('user login', async ({ page }) => {
 
 ## Why fair-playwright?
 
-### For Developers
-- **Tests read like documentation** - Self-documenting code with clear success/failure states
-- **Focus on what matters** - Progressive output keeps you focused on current work
-- **Better debugging** - Hierarchical steps make failure context crystal clear
+**For Developers**
+- Self-documenting tests with clear success/failure messages
+- Focus on what's happening now, not scrolling through logs
+- Hierarchical context makes debugging faster
 
-### For AI Assistants
-- **Structured output** - Markdown summaries optimized for LLM consumption
-- **MCP protocol** - Native integration with Claude Desktop and other AI tools
-- **Context-rich** - MAJOR/MINOR hierarchy helps AI understand test intent
+**For AI Assistants**
+- Structured markdown summaries optimized for LLM consumption
+- Native MCP protocol support for Claude Desktop
+- Clear step hierarchy helps AI understand test intent
 
-### For Teams
-- **Easier onboarding** - Declarative syntax lowers learning curve
-- **Better collaboration** - Clear test structure improves code reviews
-- **Maintainable tests** - Hierarchical organization scales with project size
+**For Teams**
+- Easier onboarding with declarative test structure
+- Better code reviews with readable test organization
+- Scales from simple tests to complex workflows
 
-## What's New in v1.1.0
-
-- 📚 **Comprehensive documentation** with VitePress
-- 📖 **Complete API reference** with TypeScript examples
-- 🎯 **Working examples** for common use cases
-- 🔍 **Migration guide** from standard Playwright
-- 🛠️ **Troubleshooting guide** for common issues
-
-[View Changelog](https://github.com/baranaytass/fair-playwright/blob/main/CHANGELOG.md)
+[Get Started →](/guide/getting-started){.vp-button}

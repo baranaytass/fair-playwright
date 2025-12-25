@@ -11,6 +11,7 @@ export default defineConfig({
 
   themeConfig: {
     logo: '/logo.png',
+    siteTitle: false, // Hide title next to logo in navbar
 
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
