@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="resources/fair-playwright-logo.png" alt="fair-playwright" width="200" />
+  <img src="resources/fair-playwright-logo.png" alt="fair-playwright" width="500" />
 
   # fair-playwright
 
