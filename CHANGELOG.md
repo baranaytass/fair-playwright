@@ -1,5 +1,34 @@
 # fair-playwright
 
+## 1.1.0
+
+### Minor Changes
+
+- Professional documentation site and branding improvements
+
+  **New Features:**
+  - 📚 Comprehensive VitePress documentation site with professional structure
+  - 🎨 Official project logo added to branding
+  - 📖 Complete API reference with TypeScript examples
+  - 🎯 Working examples for basic, advanced, and MCP usage
+  - 📝 CONTRIBUTING.md with development guidelines
+  - 🔍 Migration guide from standard Playwright
+  - 🛠️ Troubleshooting guide for common issues
+
+  **Documentation Structure:**
+  - Guide pages: Getting Started, Configuration, Step Hierarchy, Progressive Output, MCP Integration, Migration, Troubleshooting
+  - API Reference: FairReporter, E2E Helper, MCP Server, TypeScript Types
+  - Examples: Basic Usage, Advanced Patterns, MCP Integration
+
+  **Improvements:**
+  - Minimized README with links to full documentation
+  - GitHub Pages deployment workflow
+  - Logo in README, documentation homepage, navbar, and favicon
+  - Professional npm package structure following best practices
+
+  **Documentation URL:**
+  https://baranaytass.github.io/fair-playwright/
+
 ## 1.0.0
 
 ### Major Changes
