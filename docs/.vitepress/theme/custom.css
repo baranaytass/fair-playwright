@@ -1,0 +1,65 @@
+/* Alan Sans Font */
+@font-face {
+  font-family: 'Alan Sans';
+  src: url('/Alan_Sans/AlanSans-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Apply font globally */
+:root {
+  --vp-font-family-base: 'Alan Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* Custom hero styling */
+.VPHome .VPHero .tagline {
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Feature cards minimal styling */
+.VPFeature {
+  border: none;
+  background: transparent;
+}
+
+.VPFeature .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.VPFeature .title {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.VPFeature .details {
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+
+/* Screenshot styling */
+.screenshot-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
+.screenshot-container img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--vp-c-divider);
+}
+
+/* Clean button styling */
+.vp-button {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
