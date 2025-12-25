@@ -226,32 +226,32 @@ await e2e.major('Create and verify item', {
 ### 1. Keep Titles Descriptive
 
 ```typescript
-// ✅ Good
+//  Good
 title: 'Fill shipping address and validate zip code'
 
-// ❌ Avoid
+//  Avoid
 title: 'Step 1'
 ```
 
 ### 2. Use Success Messages for Context
 
 ```typescript
-// ✅ Good
+//  Good
 success: 'Form submitted, confirmation email sent, user redirected'
 
-// ❌ Avoid
+//  Avoid
 success: 'Done'
 ```
 
 ### 3. Group Related Actions
 
 ```typescript
-// ✅ Good - Logical grouping
+//  Good - Logical grouping
 await e2e.major('Setup test data', { steps: [...] });
 await e2e.major('Execute test', { steps: [...] });
 await e2e.major('Verify results', { steps: [...] });
 
-// ❌ Avoid - Too granular
+//  Avoid - Too granular
 await e2e.major('Click button 1', { steps: [...] });
 await e2e.major('Click button 2', { steps: [...] });
 ```

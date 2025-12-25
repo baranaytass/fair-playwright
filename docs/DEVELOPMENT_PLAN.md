@@ -2,7 +2,7 @@
 
 ## Current Status: ~70% Complete
 
-### ✅ Completed
+###  Completed
 - [x] Basic reporter architecture
 - [x] TypeScript types and exports
 - [x] AI markdown formatter
@@ -160,12 +160,12 @@ await e2e.minor('Fill form') // Should be classified as MINOR
 
 ## Implementation Order
 
-1. ✅ **MAJOR/MINOR Prefix Parsing** (30 min) - Unblocks core feature
-2. ✅ **Progressive Terminal Output** (1 hour) - Major UX improvement
-3. ✅ **OutputBuffer** (1 hour) - Needed for parallel tests
-4. ✅ **Integration Tests** (30 min) - Validate everything works
-5. ✅ **CI Environment Detection** (20 min) - Production ready
-6. ✅ **Unit Tests** (1-2 hours) - Quality assurance
+1.  **MAJOR/MINOR Prefix Parsing** (30 min) - Unblocks core feature
+2.  **Progressive Terminal Output** (1 hour) - Major UX improvement
+3.  **OutputBuffer** (1 hour) - Needed for parallel tests
+4.  **Integration Tests** (30 min) - Validate everything works
+5.  **CI Environment Detection** (20 min) - Production ready
+6.  **Unit Tests** (1-2 hours) - Quality assurance
 7. ⏸️ **MCP Server** (2-3 hours) - Future enhancement
 8. ⏸️ **Performance Optimization** (Ongoing)
 
@@ -182,37 +182,37 @@ await e2e.minor('Fill form') // Should be classified as MINOR
 - [x] 22 unit tests passing (StepTracker + OutputBuffer)
 - [x] Memory efficient with OutputBuffer implementation
 
-## Completed Features ✅
+## Completed Features 
 
-1. **MAJOR/MINOR Prefix Parsing** - ✅ Completed
+1. **MAJOR/MINOR Prefix Parsing** -  Completed
    - Detects [MAJOR] and [MINOR] prefixes
    - Removes prefix from display
    - Falls back to keyword detection
 
-2. **Progressive Terminal Output** - ✅ Completed
+2. **Progressive Terminal Output** -  Completed
    - Real-time updates with log-update
    - CI environment detection
    - Auto-fallback to simple mode
    - Shows running steps with elapsed time
 
-3. **OutputBuffer** - ✅ Completed
+3. **OutputBuffer** -  Completed
    - Per-worker buffering
    - Automatic memory management
    - Test compression for passed tests
    - Statistics and merge functionality
 
-4. **Integration Tests** - ✅ Completed
+4. **Integration Tests** -  Completed
    - 7 comprehensive test scenarios
    - MAJOR/MINOR classification validation
    - Native test.step() support
    - AI summary generation validated
 
-5. **Unit Tests** - ✅ Completed
+5. **Unit Tests** -  Completed
    - 22 tests passing
    - StepTracker: 12 tests
    - OutputBuffer: 10 tests
 
-6. **CI Environment Detection** - ✅ Completed
+6. **CI Environment Detection** -  Completed
    - Detects GitHub Actions, GitLab CI, etc.
    - TTY check for terminal support
    - Auto-disable progressive mode in CI

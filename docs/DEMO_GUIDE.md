@@ -8,7 +8,7 @@ Bu guide size **fair-playwright** reporter'ın tüm özelliklerini gösterecek d
 
 `tests/ecommerce.demo.spec.ts` dosyasında 3 test var:
 
-### 1️⃣ **Başarılı Senaryo** ✅
+### 1️⃣ **Başarılı Senaryo** 
 **Test:** `successful user registration and purchase flow`
 
 **3 MAJOR Step:**
@@ -16,17 +16,17 @@ Bu guide size **fair-playwright** reporter'ın tüm özelliklerini gösterecek d
 - 🛒 Product Selection (3 minor steps)
 - 💳 Checkout and Payment (4 minor steps)
 
-**Sonuç:** Tüm steplar başarılı ✅
+**Sonuç:** Tüm steplar başarılı 
 
 ---
 
-### 2️⃣ **Hata Senaryosu** ❌
+### 2️⃣ **Hata Senaryosu** 
 **Test:** `user registration with payment failure`
 
 **3 MAJOR Step:**
-- 🔐 User Registration (3 minor steps) ✅
-- 🛒 Add Products to Cart (4 minor steps) ✅
-- 💳 Payment Processing (4 minor steps) ❌ **FAILS HERE!**
+- 🔐 User Registration (3 minor steps) 
+- 🛒 Add Products to Cart (4 minor steps) 
+- 💳 Payment Processing (4 minor steps)  **FAILS HERE!**
 
 **Sonuç:** Ödeme aşamasında kasıtlı hata!
 
@@ -42,7 +42,7 @@ Bu guide size **fair-playwright** reporter'ın tüm özelliklerini gösterecek d
 
 ---
 
-## 🚀 Testleri Çalıştırma
+##  Testleri Çalıştırma
 
 ### Yöntem 1: Tüm Demo Testleri
 
@@ -64,7 +64,7 @@ npx playwright test ecommerce.demo.spec.ts -g "payment failure"
 npx playwright test ecommerce.demo.spec.ts -g "mixed mode"
 ```
 
-### Yöntem 3: UI Mode (Recommended! 🎯)
+### Yöntem 3: UI Mode (Recommended! )
 
 ```bash
 npx playwright test ecommerce.demo.spec.ts --ui
@@ -119,7 +119,7 @@ Running:
 Total: 3 test(s)
 Duration: 8.45s
 
-📝 AI Summary: ./test-results/ai-summary.md
+ AI Summary: ./test-results/ai-summary.md
 ```
 
 ---
@@ -131,29 +131,29 @@ Test bittikten sonra `test-results/ai-summary.md` dosyası oluşur:
 ```markdown
 # Test Results
 
-**Status**: ❌ FAILED (2/3 tests passed)
+**Status**:  FAILED (2/3 tests passed)
 **Duration**: 8.45s
 
-## ❌ Failed Tests
+##  Failed Tests
 
 ### user registration with payment failure
 
 **Steps Executed**:
-1. ✅ [MAJOR] User Registration (845ms)
-   - ✅ [minor] Open registration form (234ms)
-   - ✅ [minor] Fill registration details (189ms)
-   - ✅ [minor] Submit registration (156ms)
+1.  [MAJOR] User Registration (845ms)
+   -  [minor] Open registration form (234ms)
+   -  [minor] Fill registration details (189ms)
+   -  [minor] Submit registration (156ms)
 
-2. ✅ [MAJOR] Add Products to Cart (1234ms)
-   - ✅ [minor] Search for products (345ms)
-   - ✅ [minor] Add premium product (234ms)
-   - ✅ [minor] Apply discount code (189ms)
-   - ✅ [minor] Calculate total (156ms)
+2.  [MAJOR] Add Products to Cart (1234ms)
+   -  [minor] Search for products (345ms)
+   -  [minor] Add premium product (234ms)
+   -  [minor] Apply discount code (189ms)
+   -  [minor] Calculate total (156ms)
 
-3. ❌ [MAJOR] Payment Processing (2341ms)
-   - ✅ [minor] Enter payment details (234ms)
-   - ✅ [minor] Verify credit card (189ms)
-   - ❌ [minor] Process payment transaction (1812ms)
+3.  [MAJOR] Payment Processing (2341ms)
+   -  [minor] Enter payment details (234ms)
+   -  [minor] Verify credit card (189ms)
+   -  [minor] Process payment transaction (1812ms)
      Error: Locator.click: Timeout 2000ms exceeded
 
 **Artifacts**:
@@ -163,25 +163,25 @@ Test bittikten sonra `test-results/ai-summary.md` dosyası oluşur:
 
 ---
 
-## 🎯 Her Test'in Detayları
+##  Her Test'in Detayları
 
-### Test 1: Successful Flow ✅
+### Test 1: Successful Flow 
 
 **MAJOR Step 1: User Registration**
-- Navigate to registration page → ✅
-- Fill user information → ✅
-- Verify account created → ✅
+- Navigate to registration page → 
+- Fill user information → 
+- Verify account created → 
 
 **MAJOR Step 2: Product Selection**
-- Browse product catalog → ✅
-- Select product and add to cart → ✅
-- Verify cart contents → ✅
+- Browse product catalog → 
+- Select product and add to cart → 
+- Verify cart contents → 
 
 **MAJOR Step 3: Checkout and Payment**
-- Go to checkout → ✅
-- Fill shipping information → ✅
-- Process payment → ✅
-- Send confirmation email → ✅
+- Go to checkout → 
+- Fill shipping information → 
+- Process payment → 
+- Send confirmation email → 
 
 **Terminal'de göreceğin:**
 ```
@@ -190,23 +190,23 @@ Test bittikten sonra `test-results/ai-summary.md` dosyası oluşur:
 
 ---
 
-### Test 2: Payment Failure ❌
+### Test 2: Payment Failure 
 
-**MAJOR Step 1: User Registration** ✅
-- Open registration form → ✅
-- Fill registration details → ✅
-- Submit registration → ✅
+**MAJOR Step 1: User Registration** 
+- Open registration form → 
+- Fill registration details → 
+- Submit registration → 
 
-**MAJOR Step 2: Add Products to Cart** ✅
-- Search for products → ✅
-- Add premium product → ✅
-- Apply discount code → ✅
-- Calculate total → ✅
+**MAJOR Step 2: Add Products to Cart** 
+- Search for products → 
+- Add premium product → 
+- Apply discount code → 
+- Calculate total → 
 
-**MAJOR Step 3: Payment Processing** ❌
-- Enter payment details → ✅
-- Verify credit card → ✅
-- **Process payment transaction → ❌ FAILS HERE!**
+**MAJOR Step 3: Payment Processing** 
+- Enter payment details → 
+- Verify credit card → 
+- **Process payment transaction →  FAILS HERE!**
 - Generate receipt → ⏸️ SKIPPED
 
 **Terminal'de göreceğin:**
@@ -226,21 +226,21 @@ Test bittikten sonra `test-results/ai-summary.md` dosyası oluşur:
 ### Test 3: Mixed Mode 🔀
 
 **Inline Mode Steps:**
-- Navigate to site → ✅
-- Quick login → ✅
+- Navigate to site → 
+- Quick login → 
 
 **Declarative Mode - MAJOR Step:**
 - Detailed Checkout Process
-  - Add item to cart → ✅
-  - Review order → ✅
-  - Complete purchase → ✅
+  - Add item to cart → 
+  - Review order → 
+  - Complete purchase → 
 
 **Inline Mode Final Check:**
-- Verify success → ✅
+- Verify success → 
 
 ---
 
-## 🔍 İnceleme Önerileri
+##  İnceleme Önerileri
 
 ### 1. Progressive Output'u İzle
 ```bash
@@ -252,7 +252,7 @@ npx playwright test ecommerce.demo.spec.ts
 - Progress bar nasıl ilerliyor
 - Running steps nasıl gösteriliyor
 - MAJOR/MINOR badges
-- Renkli çıktılar (✅ yeşil, ❌ kırmızı)
+- Renkli çıktılar ( yeşil,  kırmızı)
 
 ### 2. AI Summary'yi İncele
 ```bash
@@ -289,7 +289,7 @@ npx playwright test ecommerce.demo.spec.ts --ui
 
 ---
 
-## 💡 Ne Öğreneceksin?
+##  Ne Öğreneceksin?
 
 ### MAJOR/MINOR Hierarchy
 - `e2e.major()` → Büyük iş akışları
@@ -348,7 +348,7 @@ npx playwright test ecommerce.demo.spec.ts --ui
 
 ---
 
-## 📊 Expected Results
+##  Expected Results
 
 ### Tüm testleri çalıştırınca:
 ```
@@ -366,7 +366,7 @@ Running 3 test(s)...
 Total: 3 test(s)
 Duration: 8.45s
 
-📝 AI Summary: ./test-results/ai-summary.md
+ AI Summary: ./test-results/ai-summary.md
 ```
 
 **Bu normal!** 1 test intentionally fail ediliyor.
@@ -402,4 +402,4 @@ Sorun mu yaşıyorsun?
 
 ---
 
-**Keyifli testler!** 🚀
+**Keyifli testler!** 

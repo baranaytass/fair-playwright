@@ -324,7 +324,7 @@ Review my tests and suggest improvements
 - **Pass rate:** 80%
 - **Areas for improvement:** 3
 
-### Strengths ✅
+### Strengths 
 
 1. **Good use of MAJOR/MINOR hierarchy**
    - Clear separation of workflows
@@ -339,7 +339,7 @@ Review my tests and suggest improvements
    - Login/logout flows are well-structured
    - Good use of page object patterns
 
-### Suggested Improvements 💡
+### Suggested Improvements 
 
 #### 1. Add Explicit Waits
 
@@ -434,19 +434,19 @@ failure: 'Checkout failed: payment declined, network timeout, or cart expired'
 ### Test-Specific Recommendations
 
 #### tests/checkout.spec.ts
-- ✅ Good workflow structure
-- ⚠️ Add payment API health check before proceeding
-- ⚠️ Handle network failures gracefully
+-  Good workflow structure
+-  Add payment API health check before proceeding
+-  Handle network failures gracefully
 
 #### tests/profile.spec.ts
-- ✅ Good use of MAJOR steps
-- ⚠️ Avatar upload timeout needs investigation
-- 💡 Consider adding file size validation
+-  Good use of MAJOR steps
+-  Avatar upload timeout needs investigation
+-  Consider adding file size validation
 
 #### tests/account.spec.ts
-- ⚠️ Confirmation modal timing issue
-- 💡 Add explicit wait for modal to render
-- 💡 Consider testing modal accessibility
+-  Confirmation modal timing issue
+-  Add explicit wait for modal to render
+-  Consider testing modal accessibility
 
 ### Priority Action Items
 
@@ -597,10 +597,10 @@ Always enable AI summaries:
 
 Help AI understand context:
 ```typescript
-// ✅ Good - Context-rich
+//  Good - Context-rich
 success: 'Payment processed, confirmation email sent, order #12345 created'
 
-// ❌ Avoid - No context
+//  Avoid - No context
 success: 'Done'
 ```
 
@@ -608,7 +608,7 @@ success: 'Done'
 
 Use MAJOR/MINOR hierarchy:
 ```typescript
-// ✅ Good - Clear structure for AI
+//  Good - Clear structure for AI
 await e2e.major('E-commerce checkout', {
   steps: [
     { title: 'Add to cart', ... },

@@ -211,7 +211,7 @@ fair-playwright can automatically classify steps:
 
 ## Nesting Guidelines
 
-### ✅ Good Nesting
+###  Good Nesting
 
 **One level deep (recommended):**
 ```typescript
@@ -230,11 +230,11 @@ await e2e.minor('Quick action', async () => {
 });
 ```
 
-### ❌ Avoid Deep Nesting
+###  Avoid Deep Nesting
 
 **Don't nest MAJOR inside MAJOR:**
 ```typescript
-// ❌ Avoid this
+//  Avoid this
 await e2e.major('Outer', {
   steps: [
     {
@@ -249,7 +249,7 @@ await e2e.major('Outer', {
 
 **Instead, use sequential MAJOR steps:**
 ```typescript
-// ✅ Do this
+//  Do this
 await e2e.major('First phase', { steps: [...] });
 await e2e.major('Second phase', { steps: [...] });
 ```
@@ -313,37 +313,37 @@ This structure is optimized for LLM context windows and reasoning.
 ### 1. Meaningful Titles
 
 ```typescript
-// ✅ Good
+//  Good
 await e2e.major('User authentication flow', ...)
 
-// ❌ Avoid
+//  Avoid
 await e2e.major('Test 1', ...)
 ```
 
 ### 2. Clear Success Messages
 
 ```typescript
-// ✅ Good
+//  Good
 success: 'User logged in and redirected to dashboard'
 
-// ❌ Avoid
+//  Avoid
 success: 'Done'
 ```
 
 ### 3. Specific Failure Messages
 
 ```typescript
-// ✅ Good
+//  Good
 failure: 'Login button not found or not clickable'
 
-// ❌ Avoid
+//  Avoid
 failure: 'Failed'
 ```
 
 ### 4. Group Related Actions
 
 ```typescript
-// ✅ Good - Grouped related steps
+//  Good - Grouped related steps
 await e2e.major('Fill registration form', {
   steps: [
     { title: 'Enter personal info', ... },
@@ -352,7 +352,7 @@ await e2e.major('Fill registration form', {
   ]
 });
 
-// ❌ Avoid - Too granular
+//  Avoid - Too granular
 await e2e.major('Enter first name', ...);
 await e2e.major('Enter last name', ...);
 await e2e.major('Enter email', ...);

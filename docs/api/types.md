@@ -547,10 +547,10 @@ switch (status) {
     console.log('✗ Failed');
     break;
   case 'skipped':
-    console.log('⊘ Skipped');
+    console.log(' Skipped');
     break;
   case 'running':
-    console.log('⏳ Running');
+    console.log(' Running');
     break;
 }
 ```

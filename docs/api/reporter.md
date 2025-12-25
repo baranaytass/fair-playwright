@@ -501,13 +501,13 @@ export default defineConfig({
 fair-playwright should be first for best output:
 
 ```typescript
-// ✅ Recommended
+//  Recommended
 reporter: [
   ['fair-playwright'],  // First
   ['html']
 ]
 
-// ⚠️ May interfere
+//  May interfere
 reporter: [
   ['list'],             // list reporter may conflict
   ['fair-playwright']

@@ -231,11 +231,11 @@ try {
 All e2e methods are async and must be awaited:
 
 ```typescript
-// ✅ Correct
+//  Correct
 await e2e.major('Step', { ... });
 await e2e.minor('Action', async () => {}, { ... });
 
-// ❌ Wrong - will not work
+//  Wrong - will not work
 e2e.major('Step', { ... });
 e2e.minor('Action', async () => {}, { ... });
 ```

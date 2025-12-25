@@ -28,8 +28,8 @@ Running tests...
 The first MAJOR step expands:
 
 ```
-⏳ MAJOR: User login flow
-  ⏳ Open login page
+ MAJOR: User login flow
+   Open login page
 ```
 
 ### First Step Complete
@@ -46,9 +46,9 @@ As tests progress, only current and failed steps are visible:
 
 ```
 ✓ MAJOR: User login flow (3 steps) → User logged in successfully
-⏳ MAJOR: Update profile
+ MAJOR: Update profile
   ✓ Open profile page
-  ⏳ Upload avatar
+   Upload avatar
 ```
 
 ### Failure
@@ -71,10 +71,10 @@ Failed steps expand and remain visible:
 
 | Symbol | Meaning |
 |--------|---------|
-| ⏳ | Running |
+|  | Running |
 | ✓ | Passed |
 | ✗ | Failed |
-| ⊘ | Skipped |
+|  | Skipped |
 | → | Result message |
 
 ### Colors
@@ -362,8 +362,8 @@ With 3 workers:
 
 ```
 Worker 1: ✓ test-1.spec.ts (3 tests)
-Worker 2: ⏳ test-2.spec.ts
-  ⏳ MAJOR: Data import
+Worker 2:  test-2.spec.ts
+   MAJOR: Data import
 Worker 3: ✓ test-3.spec.ts (5 tests)
 
 8 passed, 1 running
@@ -387,10 +387,10 @@ Progressive works best with:
 ### 3. Meaningful Progress Messages
 
 ```typescript
-// ✅ Good - Shows progress
+//  Good - Shows progress
 success: 'Uploaded 5 files, processing complete'
 
-// ❌ Avoid - No context
+//  Avoid - No context
 success: 'Done'
 ```
 

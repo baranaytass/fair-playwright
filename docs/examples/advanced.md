@@ -560,7 +560,7 @@ test('multi-tab workflow', async ({ page, context }) => {
 ### 1. Sequential MAJOR Steps
 
 ```typescript
-// ✅ Good - Clear workflow phases
+//  Good - Clear workflow phases
 await e2e.major('Phase 1: Setup', { ... });
 await e2e.major('Phase 2: Execute', { ... });
 await e2e.major('Phase 3: Verify', { ... });
@@ -569,7 +569,7 @@ await e2e.major('Phase 3: Verify', { ... });
 ### 2. Store Dynamic Data
 
 ```typescript
-// ✅ Good - Reuse data across steps
+//  Good - Reuse data across steps
 let userId: number;
 
 await e2e.major('Create user', {
@@ -597,7 +597,7 @@ await e2e.major('Verify user', {
 ### 3. Handle Async Operations
 
 ```typescript
-// ✅ Good - Wait for async operations
+//  Good - Wait for async operations
 {
   title: 'Wait for background job',
   success: 'Job completed',
@@ -612,7 +612,7 @@ await e2e.major('Verify user', {
 ### 4. Comprehensive Error Context
 
 ```typescript
-// ✅ Good - Detailed failure messages
+//  Good - Detailed failure messages
 failure: 'Checkout failed: payment declined, network timeout, or cart expired'
 ```
 

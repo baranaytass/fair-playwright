@@ -77,12 +77,12 @@ Tests run but no fair-playwright output appears.
 Check `playwright.config.ts`:
 
 ```typescript
-// ❌ Wrong
+//  Wrong
 export default defineConfig({
   reporter: 'fair-playwright'  // String format may not work
 });
 
-// ✅ Correct
+//  Correct
 export default defineConfig({
   reporter: [['fair-playwright']]  // Array format
 });
@@ -96,7 +96,7 @@ Configuration options seem ignored.
 **Solution:**
 
 ```typescript
-// ✅ Correct format
+//  Correct format
 export default defineConfig({
   reporter: [
     ['fair-playwright', {
@@ -198,22 +198,22 @@ Verify reporter is configured:
 
 ```typescript
 // Make sure you imported from fair-playwright
-import { e2e } from 'fair-playwright';  // ✅
+import { e2e } from 'fair-playwright';  // 
 
 // Not from @playwright/test
 import { test } from '@playwright/test';  // This is correct
-import { test as e2e } from '@playwright/test';  // ❌ Wrong
+import { test as e2e } from '@playwright/test';  //  Wrong
 ```
 
 Verify steps are awaited:
 
 ```typescript
-// ❌ Missing await
+//  Missing await
 test('my test', async ({ page }) => {
   e2e.major('Step', { ... });  // Won't work!
 });
 
-// ✅ With await
+//  With await
 test('my test', async ({ page }) => {
   await e2e.major('Step', { ... });  // Works!
 });
@@ -275,10 +275,10 @@ Claude Desktop doesn't show fair-playwright MCP server.
 
 3. Use absolute paths (not relative):
 ```json
-// ❌ Wrong
+//  Wrong
 "FAIR_PLAYWRIGHT_RESULTS": "./test-results"
 
-// ✅ Correct
+//  Correct
 "FAIR_PLAYWRIGHT_RESULTS": "/Users/you/project/test-results"
 ```
 
@@ -519,13 +519,13 @@ TypeError: Cannot read property 'steps' of undefined
 Ensure steps array is provided:
 
 ```typescript
-// ❌ Missing steps
+//  Missing steps
 await e2e.major('Title', {
   success: 'Done',
   failure: 'Failed'
 });
 
-// ✅ With steps
+//  With steps
 await e2e.major('Title', {
   success: 'Done',
   failure: 'Failed',
@@ -545,10 +545,10 @@ Error: Cannot find module 'fair-playwright'
 Check import path:
 
 ```typescript
-// ✅ Correct
+//  Correct
 import { e2e } from 'fair-playwright';
 
-// ❌ Wrong
+//  Wrong
 import { e2e } from 'fair-playwright/e2e';
 import { e2e } from '@fair-playwright';
 ```

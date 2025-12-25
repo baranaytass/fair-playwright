@@ -333,7 +333,7 @@ test('view profile', async ({ authenticatedPage }) => {
 
 ## Compatibility
 
-### ✅ Compatible Features
+###  Compatible Features
 
 - All Playwright test runners
 - Parallel execution
@@ -346,7 +346,7 @@ test('view profile', async ({ authenticatedPage }) => {
 - Page object models
 - Custom matchers
 
-### ⚠️ Considerations
+###  Considerations
 
 **test.step() vs e2e.major()**
 
@@ -392,7 +392,7 @@ await test.step('Setup', async () => {
 
 ### 1. Over-structuring
 
-**❌ Too granular:**
+** Too granular:**
 ```typescript
 await e2e.major('Click button', {
   steps: [
@@ -403,7 +403,7 @@ await e2e.major('Click button', {
 });
 ```
 
-**✅ Right level:**
+** Right level:**
 ```typescript
 await e2e.minor('Click button', async () => {
   await page.click('button');
@@ -412,7 +412,7 @@ await e2e.minor('Click button', async () => {
 
 ### 2. Missing Context
 
-**❌ No context:**
+** No context:**
 ```typescript
 await e2e.major('Test', {
   success: 'Done',
@@ -421,7 +421,7 @@ await e2e.major('Test', {
 });
 ```
 
-**✅ Clear context:**
+** Clear context:**
 ```typescript
 await e2e.major('User completes checkout', {
   success: 'Order placed, confirmation email sent',
@@ -432,7 +432,7 @@ await e2e.major('User completes checkout', {
 
 ### 3. Mixing Patterns Inconsistently
 
-**❌ Inconsistent:**
+** Inconsistent:**
 ```typescript
 // Some tests use e2e
 test('test 1', async ({ page }) => {
@@ -445,7 +445,7 @@ test('test 2', async ({ page }) => {
 });
 ```
 
-**✅ Consistent:**
+** Consistent:**
 - Either convert all or none in a file
 - Document which pattern to use
 - Use linting rules if needed

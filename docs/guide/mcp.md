@@ -253,17 +253,17 @@ fair-playwright generates markdown summaries optimized for LLM context:
 
 **Date**: 2024-12-23T10:30:00Z
 **Duration**: 45.2s
-**Status**: ❌ FAILED
+**Status**:  FAILED
 
 ## Overview
 - Total: 15 tests
 - ✓ Passed: 12
 - ✗ Failed: 3
-- ⊘ Skipped: 0
+-  Skipped: 0
 
 ## Failed Tests
 
-### ❌ user can checkout
+###  user can checkout
 **File**: tests/checkout.spec.ts:45
 
 #### MAJOR: Complete checkout ✗
@@ -278,7 +278,7 @@ fair-playwright generates markdown summaries optimized for LLM context:
 
 ---
 
-### ❌ user can update profile
+###  user can update profile
 ...
 ```
 

@@ -437,30 +437,30 @@ await e2e.major('Workflow', {
 ### 1. Descriptive Titles
 
 ```typescript
-// ✅ Good
+//  Good
 await e2e.major('User completes registration and email verification', ...)
 
-// ❌ Avoid
+//  Avoid
 await e2e.major('Test 1', ...)
 ```
 
 ### 2. Clear Success Messages
 
 ```typescript
-// ✅ Good
+//  Good
 success: 'User logged in, session created, redirected to dashboard'
 
-// ❌ Avoid
+//  Avoid
 success: 'Done'
 ```
 
 ### 3. Specific Failure Messages
 
 ```typescript
-// ✅ Good
+//  Good
 failure: 'Login failed: invalid credentials, session expired, or network error'
 
-// ❌ Avoid
+//  Avoid
 failure: 'Error'
 ```
 
@@ -469,7 +469,7 @@ failure: 'Error'
 Each step should be independently verifiable:
 
 ```typescript
-// ✅ Good - Each step is atomic
+//  Good - Each step is atomic
 {
   title: 'Fill email field',
   action: async () => {
@@ -478,7 +478,7 @@ Each step should be independently verifiable:
   }
 }
 
-// ❌ Avoid - Multiple unrelated actions
+//  Avoid - Multiple unrelated actions
 {
   title: 'Fill form',
   action: async () => {
@@ -492,7 +492,7 @@ Each step should be independently verifiable:
 ### 5. Use MAJOR for Workflows
 
 ```typescript
-// ✅ Good - Related steps grouped
+//  Good - Related steps grouped
 await e2e.major('Complete purchase', {
   steps: [
     { title: 'Add to cart', ... },
@@ -502,7 +502,7 @@ await e2e.major('Complete purchase', {
   success: 'Purchase complete'
 });
 
-// ❌ Avoid - Separate MAJOR steps for related actions
+//  Avoid - Separate MAJOR steps for related actions
 await e2e.major('Add to cart', { steps: [...] });
 await e2e.major('Checkout', { steps: [...] });
 await e2e.major('Payment', { steps: [...] });
@@ -511,12 +511,12 @@ await e2e.major('Payment', { steps: [...] });
 ### 6. Use MINOR for Quick Actions
 
 ```typescript
-// ✅ Good - Simple action
+//  Good - Simple action
 await e2e.minor('Click button', async () => {
   await page.click('button');
 }, { success: 'Clicked' });
 
-// ❌ Avoid - Over-engineering simple action
+//  Avoid - Over-engineering simple action
 await e2e.major('Click button', {
   steps: [
     {
@@ -572,7 +572,7 @@ await e2e.major('Add multiple items', {
 ### Nested Workflows
 
 ```typescript
-// ❌ Don't nest MAJOR inside MAJOR
+//  Don't nest MAJOR inside MAJOR
 await e2e.major('Outer', {
   steps: [
     {
@@ -585,7 +585,7 @@ await e2e.major('Outer', {
   success: 'Done'
 });
 
-// ✅ Use sequential MAJOR steps instead
+//  Use sequential MAJOR steps instead
 await e2e.major('First phase', { ... });
 await e2e.major('Second phase', { ... });
 ```

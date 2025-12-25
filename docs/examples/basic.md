@@ -390,27 +390,27 @@ export default defineConfig({
 ### 1. Use Descriptive Titles
 
 ```typescript
-// ✅ Good
+//  Good
 title: 'Verify user redirected to dashboard after login'
 
-// ❌ Avoid
+//  Avoid
 title: 'Check redirect'
 ```
 
 ### 2. Include Context in Success Messages
 
 ```typescript
-// ✅ Good
+//  Good
 success: 'Login page loaded, form visible, ready for input'
 
-// ❌ Avoid
+//  Avoid
 success: 'Done'
 ```
 
 ### 3. Group Related Actions
 
 ```typescript
-// ✅ Good - Logical MAJOR step
+//  Good - Logical MAJOR step
 await e2e.major('Complete registration', {
   steps: [
     { title: 'Fill personal info', ... },
@@ -420,7 +420,7 @@ await e2e.major('Complete registration', {
   ]
 });
 
-// ❌ Avoid - Unrelated actions grouped
+//  Avoid - Unrelated actions grouped
 await e2e.major('Do stuff', {
   steps: [
     { title: 'Login', ... },
@@ -433,12 +433,12 @@ await e2e.major('Do stuff', {
 ### 4. Use MINOR for Simple Actions
 
 ```typescript
-// ✅ Good - Simple action
+//  Good - Simple action
 await e2e.minor('Click button', async () => {
   await page.click('button');
 }, { success: 'Clicked' });
 
-// ❌ Avoid - Over-engineering
+//  Avoid - Over-engineering
 await e2e.major('Click button', {
   steps: [
     { title: 'Find button', action: async () => {} },

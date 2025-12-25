@@ -42,34 +42,34 @@ test('user checkout', async ({ page }) => {
 
 ## Key Features
 
-### 🤖 AI-First Design
+###  AI-First Design
 
 Output is structured and parseable, optimized for LLM context windows. Includes built-in MCP (Model Context Protocol) server for Claude Desktop and other AI tools.
 
-### 📊 MAJOR/MINOR Hierarchy
+###  MAJOR/MINOR Hierarchy
 
 Tests are organized in two levels:
 - **MAJOR steps**: High-level user flows (e.g., "User login", "Checkout process")
 - **MINOR steps**: Detailed actions within flows (e.g., "Fill email", "Click submit")
 
-### ⚡ Progressive Output
+###  Progressive Output
 
 Terminal updates in real-time:
-- ✅ **Completed steps** are compressed to a single line
+-  **Completed steps** are compressed to a single line
 - 🔄 **Current step** shows detailed progress
-- ❌ **Failed steps** preserve full context
+-  **Failed steps** preserve full context
 
-### 🎯 Zero Config
+###  Zero Config
 
 Works out of the box with sensible defaults. Optional configuration for advanced use cases.
 
-### 🔌 MCP Integration
+###  MCP Integration
 
 Built-in Model Context Protocol server exposes test results to AI assistants via:
 - 3 resources (test-results, test-summary, failures)
 - 5 tools (query, filter, analyze)
 
-### 🪶 Lightweight
+###  Lightweight
 
 Only 3 runtime dependencies. Bundle size under 30KB compressed. Minimal performance overhead.
 
