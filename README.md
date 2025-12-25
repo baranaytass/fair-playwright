@@ -1,9 +1,14 @@
-# fair-playwright
+<div align="center">
+  <img src="resources/fair-playwright-logo.png" alt="fair-playwright" width="200" />
 
-> AI-optimized Playwright test reporter with progressive terminal output and hierarchical step management
+  # fair-playwright
 
-[![npm version](https://img.shields.io/npm/v/fair-playwright.svg)](https://www.npmjs.com/package/fair-playwright)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  > AI-optimized Playwright test reporter with progressive terminal output and hierarchical step management
+
+  [![npm version](https://img.shields.io/npm/v/fair-playwright.svg)](https://www.npmjs.com/package/fair-playwright)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+</div>
 
 ## Features
 

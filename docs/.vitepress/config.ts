@@ -5,7 +5,13 @@ export default defineConfig({
   description: 'AI-optimized Playwright test reporter with progressive terminal output',
   base: '/fair-playwright/',
 
+  head: [
+    ['link', { rel: 'icon', type: 'image/png', href: '/fair-playwright/logo.png' }]
+  ],
+
   themeConfig: {
+    logo: '/logo.png',
+
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'API', link: '/api/' },

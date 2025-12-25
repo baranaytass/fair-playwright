@@ -6,7 +6,7 @@ hero:
   text: AI-Optimized Test Reporter
   tagline: Progressive terminal output with hierarchical step management for Playwright
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: fair-playwright
   actions:
     - theme: brand
