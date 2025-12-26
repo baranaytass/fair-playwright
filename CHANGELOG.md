@@ -1,6 +1,6 @@
 # fair-playwright
 
-## 1.1.0
+## 1.2.0
 
 ### Minor Changes
 
@@ -21,7 +21,7 @@
     ]
   });
 
-  // After (Quick Mode - v1.1.0+)
+  // After (Quick Mode - v1.2.0+)
   await e2e.quick('User login', [
     ['Open page', async () => {}],
     ['Fill form', async () => {}]
@@ -45,6 +45,11 @@
   - 8 working examples in test-project
   - Comparison table with declarative/inline modes
   - Real-world e-commerce and registration examples
+  - https://baranaytass.github.io/fair-playwright/api/e2e-helper#e2e-quick
+
+## 1.1.0
+
+### Minor Changes
 
 - Professional documentation site and branding improvements
 
@@ -60,7 +65,7 @@
 
   **Documentation Structure:**
   - Guide pages: Getting Started, Configuration, Step Hierarchy, Progressive Output, MCP Integration, Migration, Troubleshooting
-  - API Reference: FairReporter, E2E Helper (with Quick Mode), MCP Server, TypeScript Types
+  - API Reference: FairReporter, E2E Helper, MCP Server, TypeScript Types
   - Examples: Basic Usage, Advanced Patterns, MCP Integration
 
   **Design Improvements:**
@@ -72,7 +77,7 @@
   - Real terminal output screenshot
 
   **Improvements:**
-  - Minimized README with Quick Mode example
+  - Minimized README with links to full documentation
   - GitHub Pages deployment workflow
   - Logo in README, documentation homepage, navbar, and favicon
   - Professional npm package structure following best practices
