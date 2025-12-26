@@ -1,5 +1,11 @@
 import { test } from '@playwright/test';
-import type { E2EHelper, StepOptions, MajorStepOptions } from './types/index.js';
+import type {
+  E2EHelper,
+  StepOptions,
+  MajorStepOptions,
+  QuickStepDefinition,
+  QuickModeOptions,
+} from './types/index.js';
 
 /**
  * E2E test helper for MAJOR/MINOR step hierarchy
@@ -51,6 +57,34 @@ class E2EHelperImpl implements E2EHelper {
         }
         throw error;
       }
+    });
+  }
+
+  /**
+   * Execute a quick workflow with simplified tuple syntax (v1.1.0+)
+   * Converts compact syntax to declarative mode internally
+   */
+  async quick(
+    title: string,
+    steps: QuickStepDefinition[],
+    options?: QuickModeOptions
+  ): Promise<void> {
+    // Convert tuple syntax to StepDefinition[]
+    const stepDefinitions = steps.map((step) => {
+      const [stepTitle, action, stepOptions] = step;
+      return {
+        title: stepTitle,
+        action,
+        success: stepOptions?.success,
+        failure: stepOptions?.failure,
+      };
+    });
+
+    // Use existing majorDeclarative implementation
+    return this.majorDeclarative(title, {
+      success: options?.success,
+      failure: options?.failure,
+      steps: stepDefinitions,
     });
   }
 

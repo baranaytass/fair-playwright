@@ -4,11 +4,54 @@
 
 ### Minor Changes
 
+- **Quick Mode API** - NEW compact syntax for simple test workflows
+
+  **New API: `e2e.quick()`**
+
+  Addresses user feedback about verbose declarative API. Provides compact tuple syntax for simple tests while maintaining MAJOR/MINOR hierarchy.
+
+  ```typescript
+  // Before (Declarative Mode)
+  await e2e.major('User login', {
+    success: 'Logged in',
+    failure: 'Failed',
+    steps: [
+      { title: 'Open page', success: 'Opened', action: async () => {} },
+      { title: 'Fill form', success: 'Filled', action: async () => {} }
+    ]
+  });
+
+  // After (Quick Mode - v1.1.0+)
+  await e2e.quick('User login', [
+    ['Open page', async () => {}],
+    ['Fill form', async () => {}]
+  ]);
+  ```
+
+  **Features:**
+  - Compact tuple syntax: `[title, action]` or `[title, action, options]`
+  - Optional success/failure messages
+  - Full TypeScript support with `QuickStepDefinition` type
+  - Same MAJOR/MINOR hierarchy as declarative mode
+  - Internally uses existing `e2e.major()` implementation
+
+  **When to Use:**
+  - Simple, linear test flows (2-10 steps)
+  - Minimal syntax preference
+  - Quick prototyping
+
+  **Documentation:**
+  - Complete Quick Mode guide in API reference
+  - 8 working examples in test-project
+  - Comparison table with declarative/inline modes
+  - Real-world e-commerce and registration examples
+
 - Professional documentation site and branding improvements
 
   **New Features:**
   - 📚 Comprehensive VitePress documentation site with professional structure
-  - 🎨 Official project logo added to branding
+  - 🎨 Official project logo with horizontal and vertical variants
+  - 🎨 Custom Alan Sans font and pastel color palette
   - 📖 Complete API reference with TypeScript examples
   - 🎯 Working examples for basic, advanced, and MCP usage
   - 📝 CONTRIBUTING.md with development guidelines
@@ -17,11 +60,19 @@
 
   **Documentation Structure:**
   - Guide pages: Getting Started, Configuration, Step Hierarchy, Progressive Output, MCP Integration, Migration, Troubleshooting
-  - API Reference: FairReporter, E2E Helper, MCP Server, TypeScript Types
+  - API Reference: FairReporter, E2E Helper (with Quick Mode), MCP Server, TypeScript Types
   - Examples: Basic Usage, Advanced Patterns, MCP Integration
 
+  **Design Improvements:**
+  - Professional landing page with minimal, clean design
+  - Custom Alan Sans variable font (100-900 weights)
+  - Logo-inspired pastel color palette (coral #E89891, green #6DB870)
+  - Light and dark mode support
+  - Removed all emojis for professional appearance
+  - Real terminal output screenshot
+
   **Improvements:**
-  - Minimized README with links to full documentation
+  - Minimized README with Quick Mode example
   - GitHub Pages deployment workflow
   - Logo in README, documentation homepage, navbar, and favicon
   - Professional npm package structure following best practices

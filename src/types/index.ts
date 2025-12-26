@@ -346,6 +346,21 @@ export interface MajorStepOptions {
 }
 
 /**
+ * Quick step definition - simplified tuple syntax
+ * [title, action] or [title, action, options]
+ */
+export type QuickStepDefinition =
+  | [string, () => Promise<void>]
+  | [string, () => Promise<void>, StepOptions];
+
+/**
+ * Options for quick mode execution
+ */
+export interface QuickModeOptions extends StepOptions {
+  // Future: parallel execution support
+}
+
+/**
  * E2E test helper interface
  */
 export interface E2EHelper {
@@ -363,4 +378,25 @@ export interface E2EHelper {
    * Execute a minor step
    */
   minor(title: string, action: () => Promise<void>, options?: StepOptions): Promise<void>;
+
+  /**
+   * Execute a quick workflow with simplified syntax (v1.1.0+)
+   * Compact API for simple test cases
+   *
+   * @param title - Major step title
+   * @param steps - Array of [title, action] or [title, action, options] tuples
+   * @param options - Optional success/failure messages for major step
+   *
+   * @example
+   * await e2e.quick('User login', [
+   *   ['Open page', async () => { await page.goto('/login') }],
+   *   ['Fill form', async () => { await page.fill('#email', 'test@example.com') }],
+   *   ['Submit', async () => { await page.click('button[type="submit"]') }]
+   * ])
+   */
+  quick(
+    title: string,
+    steps: QuickStepDefinition[],
+    options?: QuickModeOptions
+  ): Promise<void>;
 }

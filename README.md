@@ -39,10 +39,29 @@ export default defineConfig({
 
 ### 2. Write Tests
 
+**Quick Mode** (v1.1.0+) - Compact syntax:
+
 ```typescript
 import { test } from '@playwright/test';
 import { e2e } from 'fair-playwright';
 
+test('user login', async ({ page }) => {
+  await e2e.quick('User login flow', [
+    ['Open login page', async () => {
+      await page.goto('/login');
+    }],
+    ['Submit credentials', async () => {
+      await page.getByLabel('Email').fill('user@example.com');
+      await page.getByLabel('Password').fill('password');
+      await page.getByRole('button', { name: 'Login' }).click();
+    }]
+  ]);
+});
+```
+
+**Declarative Mode** - Full control:
+
+```typescript
 test('user login', async ({ page }) => {
   await e2e.major('User login flow', {
     success: 'User logged in successfully',

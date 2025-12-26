@@ -4,8 +4,9 @@ Test organization API for hierarchical step management.
 
 ## Overview
 
-The `e2e` helper provides two methods for organizing tests:
+The `e2e` helper provides three methods for organizing tests:
 
+- `e2e.quick()` - **NEW in v1.1.0** - Compact syntax for simple workflows
 - `e2e.major()` - High-level workflows with sub-steps
 - `e2e.minor()` - Individual actions
 
@@ -14,6 +15,246 @@ The `e2e` helper provides two methods for organizing tests:
 ```typescript
 import { e2e } from 'fair-playwright';
 ```
+
+## e2e.quick()
+
+**NEW in v1.1.0** - Compact syntax for simple test workflows.
+
+### Signature
+
+```typescript
+async function quick(
+  title: string,
+  steps: QuickStepDefinition[],
+  options?: QuickModeOptions
+): Promise<void>
+```
+
+### Why Quick Mode?
+
+Quick Mode addresses the most common feedback: the declarative API can be verbose for simple tests. It provides a compact tuple syntax while maintaining the same MAJOR/MINOR hierarchy.
+
+**Before (Declarative Mode):**
+```typescript
+await e2e.major('User login', {
+  success: 'Logged in',
+  failure: 'Login failed',
+  steps: [
+    {
+      title: 'Open page',
+      success: 'Page opened',
+      action: async () => { await page.goto('/login') }
+    },
+    {
+      title: 'Fill form',
+      success: 'Form filled',
+      action: async () => { await page.fill('#email', 'test@example.com') }
+    }
+  ]
+})
+```
+
+**After (Quick Mode):**
+```typescript
+await e2e.quick('User login', [
+  ['Open page', async () => { await page.goto('/login') }],
+  ['Fill form', async () => { await page.fill('#email', 'test@example.com') }]
+])
+```
+
+### Parameters
+
+#### title
+
+Major step title displayed in output.
+
+- **Type**: `string`
+- **Required**: Yes
+
+```typescript
+await e2e.quick('User checkout flow', [...]);
+```
+
+#### steps
+
+Array of step tuples: `[title, action]` or `[title, action, options]`.
+
+- **Type**: `QuickStepDefinition[]`
+- **Required**: Yes
+
+```typescript
+type QuickStepDefinition =
+  | [string, () => Promise<void>]
+  | [string, () => Promise<void>, StepOptions];
+```
+
+**Simple syntax (no options):**
+```typescript
+['Step title', async () => { /* action */ }]
+```
+
+**With success/failure messages:**
+```typescript
+['Step title', async () => { /* action */ }, {
+  success: 'Success message',
+  failure: 'Failure message'
+}]
+```
+
+#### options
+
+Optional configuration for the major step.
+
+- **Type**: `QuickModeOptions`
+- **Required**: No
+
+```typescript
+interface QuickModeOptions {
+  success?: string;
+  failure?: string;
+}
+```
+
+### Examples
+
+#### Basic Usage
+
+```typescript
+import { test } from '@playwright/test';
+import { e2e } from 'fair-playwright';
+
+test('user login', async ({ page }) => {
+  await e2e.quick('User login flow', [
+    ['Open login page', async () => {
+      await page.goto('/login');
+    }],
+    ['Enter credentials', async () => {
+      await page.fill('#email', 'test@example.com');
+      await page.fill('#password', 'password123');
+    }],
+    ['Submit form', async () => {
+      await page.click('button[type="submit"]');
+    }],
+    ['Verify redirect', async () => {
+      await expect(page).toHaveURL('/dashboard');
+    }]
+  ]);
+});
+```
+
+#### With Success/Failure Messages
+
+```typescript
+await e2e.quick(
+  'Complete checkout',
+  [
+    [
+      'Add to cart',
+      async () => { await page.click('[data-test="add-to-cart"]') },
+      { success: 'Item added', failure: 'Failed to add item' }
+    ],
+    [
+      'Proceed to checkout',
+      async () => { await page.click('[data-test="checkout"]') },
+      { success: 'Navigated to checkout' }
+    ],
+    [
+      'Enter payment',
+      async () => { await page.fill('#card', '4111111111111111') },
+      { success: 'Payment info entered' }
+    ]
+  ],
+  {
+    success: 'Order placed successfully',
+    failure: 'Checkout failed'
+  }
+);
+```
+
+#### Multiple Workflows
+
+```typescript
+test('complete user journey', async ({ page }) => {
+  await e2e.quick('Setup phase', [
+    ['Navigate to site', async () => await page.goto('/')],
+    ['Accept cookies', async () => await page.click('#accept-cookies')]
+  ]);
+
+  await e2e.quick('Registration phase', [
+    ['Fill registration form', async () => { /* ... */ }],
+    ['Submit form', async () => { /* ... */ }],
+    ['Verify email sent', async () => { /* ... */ }]
+  ]);
+
+  await e2e.quick('Login phase', [
+    ['Enter credentials', async () => { /* ... */ }],
+    ['Click login', async () => { /* ... */ }],
+    ['Verify dashboard', async () => { /* ... */ }]
+  ]);
+});
+```
+
+### Output
+
+```
+✓ MAJOR: User login flow
+  ✓ Open login page
+  ✓ Enter credentials
+  ✓ Submit form
+  ✓ Verify redirect
+```
+
+With success message:
+```
+✓ MAJOR: Complete checkout
+  ✓ Add to cart
+  ✓ Proceed to checkout
+  ✓ Enter payment
+  → Order placed successfully
+```
+
+### Return Value
+
+Returns `Promise<void>` that resolves when all steps complete or rejects on first failure.
+
+```typescript
+try {
+  await e2e.quick('Workflow', [...]);
+  // All steps passed
+} catch (error) {
+  // Step failed, error contains details
+}
+```
+
+### When to Use Quick Mode
+
+**Use Quick Mode when:**
+- Writing simple, linear test flows
+- You want minimal syntax
+- Success/failure messages are optional or simple
+- Tests have 2-10 steps
+
+**Use Declarative Mode (`e2e.major()`) when:**
+- Complex workflows with detailed error handling
+- Each step needs specific success/failure messages
+- Building reusable step definitions
+- Tests have many steps that need clear documentation
+
+**Use Inline Mode (`e2e.minor()`) when:**
+- Single, standalone actions
+- Quick one-off operations
+- Testing individual components
+
+### Comparison
+
+| Feature | Quick Mode | Declarative Mode | Inline Mode |
+|---------|-----------|------------------|-------------|
+| Syntax | Compact tuples | Object-based | Function-based |
+| Verbosity | Low | High | Medium |
+| Type Safety | Full | Full | Full |
+| Success Messages | Optional | Required | Optional |
+| Nested Steps | Yes (MAJOR → MINOR) | Yes (MAJOR → MINOR) | No |
+| Best For | Simple workflows | Complex workflows | Single actions |
 
 ## e2e.major()
 
