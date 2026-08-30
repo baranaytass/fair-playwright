@@ -28,7 +28,7 @@
     "dev": "tsup --watch",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:integration": "npm run build && cd test-project && npm test",
+    "test:integration": "npm run build && playwright test --config test-project/playwright.config.ts",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
@@ -38,7 +38,8 @@
     "prepublishOnly": "npm run build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "test:integration:failing": "npm run build && playwright test --config test-project/playwright.failing.config.ts"
   },
   "keywords": [
     "playwright",

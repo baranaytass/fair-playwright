@@ -2,15 +2,9 @@
   "name": "fair-playwright-test-project",
   "version": "1.0.0",
   "private": true,
-  "description": "Test project for fair-playwright reporter",
+  "description": "Integration test project for fair-playwright. Run it from the repo root (npm run test:integration) - installing @playwright/test here creates a second copy and Playwright refuses to load twice.",
   "type": "module",
   "scripts": {
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:ui": "playwright test --ui",
-    "test:failing": "playwright test --config playwright.failing.config.ts"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.49.1"
+    "test": "echo \"Run from the repo root: npm run test:integration\" && exit 1"
   }
 }

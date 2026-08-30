@@ -108,21 +108,21 @@ jobs:
           name: dist
           path: dist/
 
+      # Pinned at the root, not inside test-project: the built reporter resolves
+      # @playwright/test from the root tree, and a second copy under
+      # test-project/node_modules makes Playwright throw
+      # "Requiring @playwright/test second time".
       - name: Pin @playwright/test to ${{ matrix.playwright }}
-        working-directory: test-project
         run: npm install --no-save "@playwright/test@${{ matrix.playwright }}"
 
       - name: Report resolved Playwright version
-        working-directory: test-project
         run: npx playwright --version
 
       - name: Install Playwright browsers
-        working-directory: test-project
         run: npx playwright install --with-deps chromium
 
       - name: Run integration tests
-        working-directory: test-project
-        run: npm test
+        run: npx playwright test --config test-project/playwright.config.ts
 
       - name: Upload test results
         if: always()

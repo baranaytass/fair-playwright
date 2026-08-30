@@ -2,3 +2,7 @@ node_modules/
 test-results/
 playwright-report/
 playwright/.cache/
+
+# Dependencies resolve from the repo root; a lockfile here would
+# install a second Playwright copy.
+package-lock.json
