@@ -49,12 +49,15 @@ Thumbs.db
 *.temp
 .cache/
 
-# Changesets
-.changeset/*.md
-!.changeset/README.md
+# Changesets are the release mechanism - they belong in version control.
+# Only the generated status file is transient.
+.changeset/status.json
 
-# Development artifacts
-test-project/
+# Integration test project: sources are tracked (CI runs them);
+# only its install/run artifacts are ignored.
+test-project/node_modules/
+test-project/test-results/
+test-project/playwright-report/
 
 # VitePress
 docs/.vitepress/dist/

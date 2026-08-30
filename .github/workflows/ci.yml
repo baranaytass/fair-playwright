@@ -79,9 +79,17 @@ jobs:
           retention-days: 7
 
   integration:
-    name: Integration Tests
+    # The reporter binds to Playwright's reporter API (onStepBegin, step.parent,
+    # result.stdout), so package.json promises `@playwright/test >=1.40.0`. This
+    # matrix is what keeps that promise honest: the floor of the supported range,
+    # a recent stable, and whatever `latest` currently resolves to.
+    name: Integration (Playwright ${{ matrix.playwright }})
     runs-on: ubuntu-latest
     needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        playwright: ['1.40.0', '1.49.1', 'latest']
     steps:
       - uses: actions/checkout@v4
 
@@ -100,16 +108,26 @@ jobs:
           name: dist
           path: dist/
 
+      - name: Pin @playwright/test to ${{ matrix.playwright }}
+        working-directory: test-project
+        run: npm install --no-save "@playwright/test@${{ matrix.playwright }}"
+
+      - name: Report resolved Playwright version
+        working-directory: test-project
+        run: npx playwright --version
+
       - name: Install Playwright browsers
+        working-directory: test-project
         run: npx playwright install --with-deps chromium
 
       - name: Run integration tests
-        run: npm run test:integration
+        working-directory: test-project
+        run: npm test
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-playwright-${{ matrix.playwright }}
           path: test-project/test-results/
           retention-days: 7
