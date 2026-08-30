@@ -356,9 +356,7 @@ export type QuickStepDefinition =
 /**
  * Options for quick mode execution
  */
-export interface QuickModeOptions extends StepOptions {
-  // Future: parallel execution support
-}
+export type QuickModeOptions = StepOptions;
 
 /**
  * E2E test helper interface
@@ -394,9 +392,5 @@ export interface E2EHelper {
    *   ['Submit', async () => { await page.click('button[type="submit"]') }]
    * ])
    */
-  quick(
-    title: string,
-    steps: QuickStepDefinition[],
-    options?: QuickModeOptions
-  ): Promise<void>;
+  quick(title: string, steps: QuickStepDefinition[], options?: QuickModeOptions): Promise<void>;
 }

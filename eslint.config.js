@@ -27,6 +27,8 @@ export default [
         Map: 'readonly',
         Array: 'readonly',
         NodeJS: 'readonly',
+        URL: 'readonly',
+        __dirname: 'readonly',
       },
     },
     plugins: {
