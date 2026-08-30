@@ -264,7 +264,7 @@ Claude Desktop doesn't show fair-playwright MCP server.
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/absolute/path/to/results"
       }
@@ -337,7 +337,7 @@ MCP server crashes on startup or during queries.
 Run with verbose mode:
 
 ```bash
-npx fair-playwright-mcp --verbose
+npx -p fair-playwright fair-playwright-mcp --verbose
 ```
 
 Check Node.js version:

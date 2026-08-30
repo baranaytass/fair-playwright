@@ -254,7 +254,7 @@ The package includes an MCP server for AI integration:
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"]
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"]
     }
   }
 }

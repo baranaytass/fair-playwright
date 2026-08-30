@@ -203,7 +203,7 @@ Configure the MCP server separately:
 export FAIR_PLAYWRIGHT_RESULTS=/path/to/results
 
 # Via command line
-npx fair-playwright-mcp --results-path ./test-results --verbose
+npx -p fair-playwright fair-playwright-mcp --results-path ./test-results --verbose
 ```
 
 See [MCP Integration](/guide/mcp) for details.

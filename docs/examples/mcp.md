@@ -15,7 +15,7 @@ Add fair-playwright MCP server to Claude Desktop:
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/Users/you/project/test-results"
       }
@@ -31,7 +31,7 @@ Add fair-playwright MCP server to Claude Desktop:
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "C:\\Users\\you\\project\\test-results"
       }
@@ -501,20 +501,20 @@ Which tests are slowest? Can you suggest optimizations?
 
 ```bash
 # Basic
-npx fair-playwright-mcp
+npx -p fair-playwright fair-playwright-mcp
 
 # With options
-npx fair-playwright-mcp --results-path ./test-results --verbose
+npx -p fair-playwright fair-playwright-mcp --results-path ./test-results --verbose
 
 # With environment variable
 export FAIR_PLAYWRIGHT_RESULTS=/path/to/results
-npx fair-playwright-mcp
+npx -p fair-playwright fair-playwright-mcp
 ```
 
 ### Debug Mode
 
 ```bash
-DEBUG=fair-playwright:mcp npx fair-playwright-mcp --verbose
+DEBUG=fair-playwright:mcp npx -p fair-playwright fair-playwright-mcp --verbose
 ```
 
 **Output:**

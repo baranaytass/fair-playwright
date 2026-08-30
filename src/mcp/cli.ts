@@ -2,7 +2,7 @@
  * MCP CLI entry point for fair-playwright
  *
  * Usage:
- *   npx fair-playwright-mcp [options]
+ *   npx -p fair-playwright fair-playwright-mcp [options]
  *
  * Options:
  *   --results-path <path>  Path to test results JSON file (default: ./test-results/results.json)
@@ -10,7 +10,7 @@
  *   --help                 Show help message
  *
  * Example:
- *   npx fair-playwright-mcp --results-path ./custom-results.json --verbose
+ *   npx -p fair-playwright fair-playwright-mcp --results-path ./custom-results.json --verbose
  */
 
 import { createMCPServer } from './server.js';
@@ -34,7 +34,7 @@ async function main() {
 fair-playwright MCP Server
 
 Usage:
-  npx fair-playwright-mcp [options]
+  npx -p fair-playwright fair-playwright-mcp [options]
 
 Options:
   --results-path <path>  Path to test results JSON file
@@ -43,14 +43,14 @@ Options:
   --help                 Show this help message
 
 Example:
-  npx fair-playwright-mcp --results-path ./custom-results.json
+  npx -p fair-playwright fair-playwright-mcp --results-path ./custom-results.json
 
 For Claude Desktop integration, add to claude_desktop_config.json:
 {
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"]
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"]
     }
   }
 }

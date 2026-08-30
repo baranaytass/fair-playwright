@@ -106,10 +106,24 @@ npx playwright test
 
 ## MCP Server
 
-Fair-playwright includes a Model Context Protocol server for AI assistants:
+Fair-playwright includes a Model Context Protocol server that exposes test
+results to AI assistants.
+
+Register it with Claude Code:
 
 ```bash
-npx fair-playwright-mcp --help
+claude mcp add fair-playwright --scope project -- \
+  npx -p fair-playwright fair-playwright-mcp \
+  --results-path ./test-results/results.json
+```
+
+The `-p fair-playwright` part is required: `fair-playwright-mcp` is a bin name,
+not a package name, so `npx fair-playwright-mcp` fails with a 404.
+
+The server reads a JSON results file, which the reporter writes only when asked:
+
+```typescript
+reporter: [['fair-playwright', { output: { json: './test-results/results.json' } }]]
 ```
 
 See [MCP Guide](https://baranaytass.github.io/fair-playwright/guide/mcp) for details.

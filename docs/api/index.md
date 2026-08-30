@@ -57,11 +57,11 @@ await e2e.minor('Title', async () => {
 
 ```bash
 # Start server
-npx fair-playwright-mcp --results-path ./test-results
+npx -p fair-playwright fair-playwright-mcp --results-path ./test-results
 
 # With environment variable
 export FAIR_PLAYWRIGHT_RESULTS=/path/to/results
-npx fair-playwright-mcp
+npx -p fair-playwright fair-playwright-mcp
 ```
 
 ## Exports

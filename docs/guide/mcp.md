@@ -38,7 +38,7 @@ Add to your Claude Desktop config:
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/absolute/path/to/your/test-results"
       }
@@ -47,17 +47,58 @@ Add to your Claude Desktop config:
 }
 ```
 
-### 3. Run Tests
+### Claude Code
+
+In a project directory, register the server once:
 
 ```bash
-npx playwright test --reporter=fair-playwright
+claude mcp add fair-playwright --scope project -- \
+  npx -p fair-playwright fair-playwright-mcp \
+  --results-path ./test-results/results.json
 ```
 
-### 4. Restart Claude Desktop
+That writes `.mcp.json` in the project root. Restart Claude Code to pick it up.
+
+::: warning The `-p` flag is required
+`fair-playwright-mcp` is a bin name, not a package name. Without
+`-p fair-playwright`, npm looks for a package by that name and fails with a 404.
+:::
+
+### 3. Enable JSON output
+
+The MCP server reads a JSON results file, and the reporter only writes one when
+you ask it to. This is the single most common reason the server appears to
+return nothing:
+
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  reporter: [
+    ['fair-playwright', {
+      output: {
+        console: true,
+        json: './test-results/results.json'  // the MCP server reads this
+      }
+    }]
+  ]
+});
+```
+
+Point the server at the same path you configure here. If you set
+`FAIR_PLAYWRIGHT_RESULTS` in the MCP config, the reporter picks that path up
+automatically and you can leave `json` unset.
+
+### 4. Run Tests
+
+```bash
+npx playwright test
+```
+
+### 5. Restart Claude Desktop
 
 The MCP server will start automatically when Claude launches.
 
-### 5. Query Tests
+### 6. Query Tests
 
 In Claude Desktop:
 ```
@@ -74,14 +115,14 @@ The MCP server runs automatically when configured in Claude Desktop. For manual 
 
 ```bash
 # With results path
-npx fair-playwright-mcp --results-path ./test-results
+npx -p fair-playwright fair-playwright-mcp --results-path ./test-results
 
 # With environment variable
 export FAIR_PLAYWRIGHT_RESULTS=/path/to/results
-npx fair-playwright-mcp
+npx -p fair-playwright fair-playwright-mcp
 
 # Verbose mode
-npx fair-playwright-mcp --verbose
+npx -p fair-playwright fair-playwright-mcp --verbose
 ```
 
 ### Server Options
@@ -94,7 +135,7 @@ npx fair-playwright-mcp --verbose
 
 ### Environment Variables
 
-- `FAIR_PLAYWRIGHT_RESULTS`: Test results directory path
+- `FAIR_PLAYWRIGHT_RESULTS`: Path to the results file, or the directory containing `results.json`
 
 ## Resources
 
@@ -401,14 +442,14 @@ Compare the failed test with the successful one
   "mcpServers": {
     "fair-playwright-web": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/path/to/web/results"
       }
     },
     "fair-playwright-api": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/path/to/api/results"
       }
@@ -424,7 +465,7 @@ Compare the failed test with the successful one
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "${HOME}/ci-results/latest"
       }

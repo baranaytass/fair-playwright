@@ -12,17 +12,17 @@ fair-playwright includes a built-in MCP server that exposes test results to AI a
 
 ```bash
 # With results path
-npx fair-playwright-mcp --results-path ./test-results
+npx -p fair-playwright fair-playwright-mcp --results-path ./test-results
 
 # With environment variable
 export FAIR_PLAYWRIGHT_RESULTS=/path/to/results
-npx fair-playwright-mcp
+npx -p fair-playwright fair-playwright-mcp
 
 # Verbose logging
-npx fair-playwright-mcp --verbose
+npx -p fair-playwright fair-playwright-mcp --verbose
 
 # Show help
-npx fair-playwright-mcp --help
+npx -p fair-playwright fair-playwright-mcp --help
 ```
 
 ### Options
@@ -48,7 +48,7 @@ npx fair-playwright-mcp --help
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/absolute/path/to/test-results"
       }
@@ -65,7 +65,7 @@ npx fair-playwright-mcp --help
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "C:\\absolute\\path\\to\\test-results"
       }
@@ -82,7 +82,7 @@ npx fair-playwright-mcp --help
   "mcpServers": {
     "fair-playwright": {
       "command": "npx",
-      "args": ["fair-playwright-mcp"],
+      "args": ["-p", "fair-playwright", "fair-playwright-mcp"],
       "env": {
         "FAIR_PLAYWRIGHT_RESULTS": "/absolute/path/to/test-results"
       }
@@ -624,7 +624,7 @@ Why did the "Submit payment" step fail?
 ### Enable Debug Logging
 
 ```bash
-DEBUG=fair-playwright:mcp npx fair-playwright-mcp
+DEBUG=fair-playwright:mcp npx -p fair-playwright fair-playwright-mcp
 ```
 
 **Output:**
@@ -641,7 +641,7 @@ DEBUG=fair-playwright:mcp npx fair-playwright-mcp
 ### Verbose Mode
 
 ```bash
-npx fair-playwright-mcp --verbose
+npx -p fair-playwright fair-playwright-mcp --verbose
 ```
 
 **Output:**
@@ -683,11 +683,11 @@ MCP protocol via stdio requires:
 
 ```bash
 # Start server
-npx fair-playwright-mcp --verbose
+npx -p fair-playwright fair-playwright-mcp --verbose
 
 # In another terminal, send JSON-RPC request
 echo '{"jsonrpc":"2.0","id":1,"method":"resources/list"}' | \
-  npx fair-playwright-mcp
+  npx -p fair-playwright fair-playwright-mcp
 ```
 
 ### Integration Testing
