@@ -74,11 +74,18 @@ export class FairReporter implements Reporter {
       this.aiFormatter = new AIFormatter(this.config, outputPath);
     }
 
-    if (this.config.output.json) {
+    // JSON output is what the MCP server reads. When a project has wired up the
+    // MCP server (FAIR_PLAYWRIGHT_RESULTS is exported by that integration) but
+    // left `output.json` off, the server would have nothing to read and would
+    // fail silently - so enable it implicitly and honour the requested path.
+    const mcpResultsPath = process.env.FAIR_PLAYWRIGHT_RESULTS;
+    const jsonSetting = this.config.output.json || (mcpResultsPath ? true : false);
+
+    if (jsonSetting) {
       const outputPath =
-        typeof this.config.output.json === 'string'
-          ? this.config.output.json
-          : './test-results/results.json';
+        typeof jsonSetting === 'string'
+          ? jsonSetting
+          : (mcpResultsPath ?? './test-results/results.json');
       this.jsonFormatter = new JSONFormatter(this.config, outputPath);
     }
   }

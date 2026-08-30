@@ -13,9 +13,10 @@ import {
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { readFile } from 'fs/promises';
-import { existsSync } from 'fs';
+import { readFile, stat } from 'fs/promises';
+import { join, resolve } from 'path';
 import type { TestMetadata } from '../types/index.js';
+import { VERSION } from '../version.js';
 
 export interface MCPServerConfig {
   /**
@@ -48,11 +49,17 @@ export class MCPServer {
   private config: Required<MCPServerConfig>;
   private testResults: TestMetadata[] = [];
 
+  /** mtime+size of the results file the current testResults were parsed from. */
+  private loadedSignature?: string;
+
+  /** Why the last load produced no results, if it produced none. */
+  private loadProblem?: string;
+
   constructor(config: MCPServerConfig = {}) {
     this.config = {
       resultsPath: config.resultsPath ?? './test-results/results.json',
       name: config.name ?? 'fair-playwright',
-      version: config.version ?? '0.1.0',
+      version: config.version ?? VERSION,
       verbose: config.verbose ?? false,
     };
 
@@ -105,9 +112,13 @@ export class MCPServer {
     this.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       const uri = request.params.uri.toString();
 
-      // Load test results if not already loaded
-      if (this.testResults.length === 0) {
-        await this.loadTestResults();
+      // Re-read results if the reporter has rewritten them since the last call.
+      await this.refreshTestResults();
+
+      if (this.loadProblem) {
+        return {
+          contents: [{ uri, mimeType: 'text/plain', text: this.loadProblem }],
+        };
       }
 
       switch (uri) {
@@ -223,9 +234,15 @@ export class MCPServer {
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
 
-      // Load test results if not already loaded
-      if (this.testResults.length === 0) {
-        await this.loadTestResults();
+      // Re-read results if the reporter has rewritten them since the last call.
+      await this.refreshTestResults();
+
+      // Surface a real explanation instead of an empty result set.
+      if (this.loadProblem) {
+        return {
+          content: [{ type: 'text', text: this.loadProblem }],
+          isError: true,
+        };
       }
 
       switch (name) {
@@ -256,9 +273,7 @@ export class MCPServer {
             content: [
               {
                 type: 'text',
-                text: test
-                  ? JSON.stringify(test, null, 2)
-                  : `No test found matching: ${title}`,
+                text: test ? JSON.stringify(test, null, 2) : `No test found matching: ${title}`,
               },
             ],
           };
@@ -313,27 +328,82 @@ export class MCPServer {
   }
 
   /**
-   * Load test results from JSON file
+   * Resolve the configured location to an actual results file.
+   *
+   * `--results-path` / FAIR_PLAYWRIGHT_RESULTS has historically been documented
+   * as a directory and used as a file path, so accept both: a directory is
+   * resolved to `results.json` inside it.
    */
-  private async loadTestResults(): Promise<void> {
-    try {
-      if (!existsSync(this.config.resultsPath)) {
-        if (this.config.verbose) {
-          console.error(`[MCP] Results file not found: ${this.config.resultsPath}`);
-        }
-        return;
-      }
+  private async resolveResultsFile(): Promise<string> {
+    const configured = resolve(this.config.resultsPath);
 
-      const content = await readFile(this.config.resultsPath, 'utf-8');
+    try {
+      const stats = await stat(configured);
+      if (stats.isDirectory()) {
+        return join(configured, 'results.json');
+      }
+    } catch {
+      // Does not exist yet - fall through and report against the configured path.
+    }
+
+    return configured;
+  }
+
+  /**
+   * Ensure `testResults` reflects the current contents of the results file.
+   *
+   * The results file is rewritten by the reporter on every test run, so results
+   * are re-read whenever the file's mtime or size changes. Caching on "have we
+   * loaded anything yet" would pin the server to the first run it ever saw and
+   * serve stale results for the rest of the session - which breaks the core loop
+   * this server exists for (run tests, read results, fix code, run again).
+   */
+  private async refreshTestResults(): Promise<void> {
+    const path = await this.resolveResultsFile();
+
+    let signature: string;
+    try {
+      const stats = await stat(path);
+      signature = `${stats.mtimeMs}:${stats.size}`;
+    } catch {
+      this.testResults = [];
+      this.loadedSignature = undefined;
+      this.loadProblem =
+        `No test results found at ${path}.\n\n` +
+        `Run your Playwright suite first. The fair-playwright reporter only writes this ` +
+        `file when JSON output is enabled, for example:\n\n` +
+        `  reporter: [['fair-playwright', { output: { json: true } }]]`;
+
+      if (this.config.verbose) {
+        console.error(`[MCP] Results file not found: ${path}`);
+      }
+      return;
+    }
+
+    // Unchanged since the last successful read - reuse what we have.
+    if (signature === this.loadedSignature) {
+      return;
+    }
+
+    try {
+      const content = await readFile(path, 'utf-8');
       const data = JSON.parse(content);
 
       // Handle both direct array and wrapped format
       this.testResults = Array.isArray(data) ? data : data.tests || [];
+      this.loadedSignature = signature;
+      this.loadProblem = undefined;
 
       if (this.config.verbose) {
-        console.error(`[MCP] Loaded ${this.testResults.length} test results`);
+        console.error(`[MCP] Loaded ${this.testResults.length} test results from ${path}`);
       }
     } catch (error) {
+      this.testResults = [];
+      this.loadedSignature = undefined;
+      this.loadProblem =
+        `Could not read test results at ${path}: ${(error as Error).message}\n\n` +
+        `The file may be truncated or mid-write. Re-run the test suite and try again.`;
+
       if (this.config.verbose) {
         console.error(`[MCP] Error loading test results:`, error);
       }
@@ -350,6 +420,20 @@ export class MCPServer {
     if (this.config.verbose) {
       console.error('[MCP] Server started and connected via stdio');
     }
+  }
+
+  /**
+   * Re-read the results file if it changed, then return the current snapshot.
+   *
+   * Exposed for embedders (and tests) that drive the server directly rather
+   * than over stdio.
+   */
+  async readResults(): Promise<{
+    tests: TestMetadata[];
+    problem?: string;
+  }> {
+    await this.refreshTestResults();
+    return { tests: this.testResults, problem: this.loadProblem };
   }
 
   /**
@@ -473,9 +557,7 @@ export class MCPServer {
    * Query specific test by title
    */
   private queryTest(title: string): TestMetadata | null {
-    const test = this.testResults.find((t) =>
-      t.title.toLowerCase().includes(title.toLowerCase())
-    );
+    const test = this.testResults.find((t) => t.title.toLowerCase().includes(title.toLowerCase()));
     return test || null;
   }
 
