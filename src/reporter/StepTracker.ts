@@ -80,12 +80,7 @@ export class StepTracker {
   /**
    * End tracking a step
    */
-  endStep(
-    _testCase: TestCase,
-    _result: TestResult,
-    step: TestStep,
-    stepId: string
-  ): void {
+  endStep(_testCase: TestCase, _result: TestResult, step: TestStep, stepId: string): void {
     const stepMetadata = this.steps.get(stepId);
     if (!stepMetadata) return;
 
@@ -154,11 +149,7 @@ export class StepTracker {
     const output = result.stdout.join('\n') + '\n' + result.stderr.join('\n');
 
     // Look for browser console error patterns
-    const errorPatterns = [
-      /console\.error:\s*(.+)/gi,
-      /\[error\]\s*(.+)/gi,
-      /ERROR:\s*(.+)/gi,
-    ];
+    const errorPatterns = [/console\.error:\s*(.+)/gi, /\[error\]\s*(.+)/gi, /ERROR:\s*(.+)/gi];
 
     errorPatterns.forEach((pattern) => {
       const matches = output.matchAll(pattern);

@@ -36,11 +36,7 @@ class E2EHelperImpl implements E2EHelper {
   /**
    * Execute a minor step (inline mode only)
    */
-  async minor(
-    title: string,
-    action: () => Promise<void>,
-    options?: StepOptions
-  ): Promise<void> {
+  async minor(title: string, action: () => Promise<void>, options?: StepOptions): Promise<void> {
     const stepTitle = this.formatStepTitle(title, 'minor', options);
 
     return test.step(stepTitle, async () => {
@@ -115,10 +111,7 @@ class E2EHelperImpl implements E2EHelper {
   /**
    * Declarative mode for major steps with child steps
    */
-  private async majorDeclarative(
-    title: string,
-    options: MajorStepOptions
-  ): Promise<void> {
+  private async majorDeclarative(title: string, options: MajorStepOptions): Promise<void> {
     const stepTitle = this.formatStepTitle(title, 'major', options);
 
     return test.step(stepTitle, async () => {
@@ -135,9 +128,7 @@ class E2EHelperImpl implements E2EHelper {
             await childStep.action();
           } catch (error) {
             if (childStep.failure) {
-              const enhancedError = new Error(
-                `${childStep.failure}: ${(error as Error).message}`
-              );
+              const enhancedError = new Error(`${childStep.failure}: ${(error as Error).message}`);
               enhancedError.stack = (error as Error).stack;
               throw enhancedError;
             }
@@ -152,11 +143,7 @@ class E2EHelperImpl implements E2EHelper {
    * Format step title with metadata for the reporter
    * The reporter will parse this metadata to classify steps
    */
-  private formatStepTitle(
-    title: string,
-    level: 'major' | 'minor',
-    _options?: StepOptions
-  ): string {
+  private formatStepTitle(title: string, level: 'major' | 'minor', _options?: StepOptions): string {
     // For now, we'll use a simple prefix system
     // The reporter can parse these prefixes to identify MAJOR/MINOR steps
     const prefix = level === 'major' ? '[MAJOR]' : '[MINOR]';

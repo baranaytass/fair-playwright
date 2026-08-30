@@ -19,10 +19,7 @@ export class OutputBuffer {
   private maxBufferSize: number;
   private compressPassedTests: boolean;
 
-  constructor(options?: {
-    maxBufferSize?: number;
-    compressPassedTests?: boolean;
-  }) {
+  constructor(options?: { maxBufferSize?: number; compressPassedTests?: boolean }) {
     this.maxBufferSize = options?.maxBufferSize ?? 1000;
     this.compressPassedTests = options?.compressPassedTests ?? true;
   }

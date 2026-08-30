@@ -29,9 +29,7 @@ export class ConsoleFormatter {
     // 2. Not in CI environment
     // 3. stdout is a TTY
     this.useProgressiveMode =
-      config.mode === 'progressive' &&
-      !this.isCI &&
-      process.stdout.isTTY === true;
+      config.mode === 'progressive' && !this.isCI && process.stdout.isTTY === true;
   }
 
   /**
@@ -207,13 +205,12 @@ export class ConsoleFormatter {
     const lines: string[] = [];
 
     // Progress bar
-    const progress = this.totalTests > 0
-      ? Math.floor((this.completedTests / this.totalTests) * 100)
-      : 0;
+    const progress =
+      this.totalTests > 0 ? Math.floor((this.completedTests / this.totalTests) * 100) : 0;
 
     lines.push(
       pc.dim(`Progress: ${this.completedTests}/${this.totalTests} tests `) +
-      pc.green(`(${progress}%)`)
+        pc.green(`(${progress}%)`)
     );
 
     // Status counts
@@ -277,7 +274,9 @@ export class ConsoleFormatter {
           const successMsg = majorStep.successMessage
             ? pc.dim(` - ${majorStep.successMessage}`)
             : '';
-          console.log(pc.green(`  ${stepNumber}. ✓ [MAJOR] ${majorStep.title}${successMsg}${duration}`));
+          console.log(
+            pc.green(`  ${stepNumber}. ✓ [MAJOR] ${majorStep.title}${successMsg}${duration}`)
+          );
         } else if (majorStep.status === 'failed') {
           // Failed MAJOR step: show detailed breakdown
           console.log(pc.red(`  ${stepNumber}. ✗ [MAJOR] ${majorStep.title}`));
@@ -291,9 +290,13 @@ export class ConsoleFormatter {
               const duration = minorStep.duration ? pc.dim(` (${minorStep.duration}ms)`) : '';
 
               if (minorStep.status === 'passed') {
-                console.log(pc.green(`      ${minorNumber}. ✓ [minor] ${minorStep.title}${duration}`));
+                console.log(
+                  pc.green(`      ${minorNumber}. ✓ [minor] ${minorStep.title}${duration}`)
+                );
               } else if (minorStep.status === 'failed') {
-                console.log(pc.red(`      ${minorNumber}. ✗ [minor] ${minorStep.title}${duration}`));
+                console.log(
+                  pc.red(`      ${minorNumber}. ✗ [minor] ${minorStep.title}${duration}`)
+                );
                 if (minorStep.error) {
                   console.log(pc.dim(`         ${minorStep.error.message}`));
                 }
