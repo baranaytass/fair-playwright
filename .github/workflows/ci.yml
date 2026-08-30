@@ -118,8 +118,17 @@ jobs:
       - name: Report resolved Playwright version
         run: npx playwright --version
 
+      # System dependencies come from a current Playwright, because the pinned
+      # version may predate the runner image. 1.40.0 (Nov 2023) asks noble for
+      # libasound2, which Ubuntu 24.04 renamed to libasound2t64:
+      #   E: Package 'libasound2' has no installation candidate
+      # The browser binary itself is then installed by the pinned version, which
+      # is the copy the tests actually run against.
+      - name: Install system dependencies
+        run: npx --yes playwright@latest install-deps chromium
+
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Run integration tests
         run: npx playwright test --config test-project/playwright.config.ts
