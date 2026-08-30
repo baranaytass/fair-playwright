@@ -1,5 +1,22 @@
 # fair-playwright
 
+## 1.2.2
+
+### Patch Changes
+
+- Fix the package entry points, which pointed at files the build never produced.
+
+  `exports.import` and `module` named `dist/index.mjs`, but tsup emits ESM as
+  `dist/index.js` and CJS as `dist/index.cjs` for this package. Importing from an
+  ESM project therefore failed:
+
+      Cannot find module '.../fair-playwright/dist/index.mjs'
+      Did you mean to import "fair-playwright/dist/index.js"?
+
+  CommonJS consumers resolved through `require` and never hit it, which is why it
+  went unnoticed. `main`, `module` and `exports` now match what ships, and each
+  condition carries its matching type declarations.
+
 ## 1.2.1
 
 ### Patch Changes
